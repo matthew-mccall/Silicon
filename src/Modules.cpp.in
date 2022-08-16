@@ -1,0 +1,17 @@
+#include "Modules.hpp"
+
+${ENGINE_MODULE_INCLUDES}
+
+namespace Engine
+{
+    void InitializeModules()
+    {
+        ${ENGINE_MODULE_INIT_FUNCS}
+    }
+
+    void DeinitializeModules()
+    {
+        ${ENGINE_MODULE_DEINIT_FUNCS}
+    }
+
+} // namespace Engine
