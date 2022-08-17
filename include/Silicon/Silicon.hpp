@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Engine
+namespace Si
 {
     bool Initialize();
     extern void Print(const std::string &message);

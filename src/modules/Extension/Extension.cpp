@@ -1,4 +1,4 @@
-#include "Core/Core.hpp"
+#include "Silicon/Silicon.hpp"
 
 #include "Extension.hpp"
     
@@ -6,11 +6,11 @@ namespace Extension
 {
     void Initialize()
     {
-        Engine::Print("Initialized Extension!");
+        Si::Print("Initialized Extension!");
     }
 
     void Deinitialize()
     {
-        Engine::Print("Deinitalized Extension!");
+        Si::Print("Deinitalized Extension!");
     }
 } // namespace Extension

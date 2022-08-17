@@ -1,7 +1,7 @@
-#include "Core/Core.hpp"
+#include "Silicon/Silicon.hpp"
 
 int main(int argc, char **argv)
 {
-    Engine::Initialize();
-    Engine::Deinitialize();
+    Si::Initialize();
+    Si::Deinitialize();
 }

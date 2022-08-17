@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "Core/Core.hpp"
+#include "Silicon/Silicon.hpp"
 
 #include "Modules.hpp"
 
-namespace Engine
+namespace Si
 {
     bool Initialize()
     {

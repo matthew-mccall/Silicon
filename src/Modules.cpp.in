@@ -2,16 +2,16 @@
 
 ${ENGINE_MODULE_INCLUDES}
 
-namespace Engine
+namespace Si
 {
     void InitializeModules()
     {
-        ${ENGINE_MODULE_INIT_FUNCS}
+${ENGINE_MODULE_INIT_FUNCS}
     }
 
     void DeinitializeModules()
     {
-        ${ENGINE_MODULE_DEINIT_FUNCS}
+${ENGINE_MODULE_DEINIT_FUNCS}
     }
 
 } // namespace Engine

@@ -1,7 +1,7 @@
 #if !defined(ENGINE_MODULES_HPP)
 #define ENGINE_MODULES_HPP
 
-namespace Engine
+namespace Si
 {
     void InitializeModules();
     void DeinitializeModules();
