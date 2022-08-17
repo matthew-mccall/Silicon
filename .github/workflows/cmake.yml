@@ -32,6 +32,13 @@ jobs:
         # An explicit key for restoring and saving the cache
         key: ${{ runner.os }}-build-${{ env.BUILD_TYPE }}
 
+    - name: Install CMake
+      run: |
+        sudo apt remove --purge cmake
+        hash -r
+        sudo snap install cmake --classic
+        cmake --version
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
