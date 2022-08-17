@@ -16,3 +16,5 @@ add_library(${PROJECT_NAME} src/Silicon.cpp ${CMAKE_CURRENT_BINARY_DIR}/Modules.
 target_link_libraries(${PROJECT_NAME} PUBLIC SiliconHeaders)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src/modules")
+
+add_subdirectory(editor)
