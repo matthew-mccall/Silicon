@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Silicon Source" pattern="file[silicon]:src//*||file[silicon]:include//*" />
+</component>

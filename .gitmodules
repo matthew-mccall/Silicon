@@ -1,3 +1,9 @@
 [submodule "libs/spdlog"]
 	path = libs/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "libs/boost-cmake"]
+	path = libs/boost-cmake
+	url = https://github.com/Orphis/boost-cmake.git
+[submodule "libs/GSL"]
+	path = libs/GSL
+	url = https://github.com/microsoft/GSL.git

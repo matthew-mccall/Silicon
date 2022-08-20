@@ -24,20 +24,19 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Silicon.hpp"
-#include "Silicon/Log.hpp"
+//
+// Created by Matthew McCall on 8/19/22.
+//
 
-#include "Extension.hpp"
-    
-namespace Extension
+#ifndef SILICON_ALLOCATOR_HPP
+#define SILICON_ALLOCATOR_HPP
+
+#include "boost/pool/pool_alloc.hpp"
+
+namespace Si
 {
-    void Initialize()
-    {
-        Si::Engine::Debug("Initialized Extension!");
-    }
+    template <typename T>
+    using Allocator = boost::pool_allocator<T>;
+}
 
-    void Deinitialize()
-    {
-        Si::Engine::Debug("Deinitalized Extension!");
-    }
-} // namespace Extension
+#endif //SILICON_ALLOCATOR_HPP
