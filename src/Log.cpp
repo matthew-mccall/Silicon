@@ -37,9 +37,9 @@
 
 namespace {
     std::shared_ptr<spdlog::logger> s_engineLogger;
-    std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_engineLogHistory;
-
     std::shared_ptr<spdlog::logger> s_clientLogger;
+
+    std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_engineLogHistory;
     std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_clientLogHistory;
 }
 

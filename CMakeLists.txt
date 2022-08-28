@@ -5,6 +5,7 @@ project(Silicon)
 add_subdirectory(libs/spdlog)
 add_subdirectory(libs/boost-cmake)
 add_subdirectory(libs/GSL)
+add_subdirectory(libs/SDL)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -27,7 +28,8 @@ configure_file(src/Modules.cpp.in Modules.cpp)
 
 add_library(${PROJECT_NAME} src/Silicon.cpp ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Modules.hpp src/Log.cpp)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
-target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src/modules")
+target_link_libraries(${PROJECT_NAME} PUBLIC ${ENGINE_MODULES})
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/modules")
 
 add_subdirectory(editor)
