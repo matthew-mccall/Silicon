@@ -33,10 +33,9 @@
 
 #include "boost/pool/pool_alloc.hpp"
 
-namespace Si
-{
-    template <typename T>
-    using Allocator = boost::pool_allocator<T>;
+namespace Si {
+template <typename T>
+using Allocator = boost::pool_allocator<T>;
 }
 
-#endif //SILICON_ALLOCATOR_HPP
+#endif // SILICON_ALLOCATOR_HPP

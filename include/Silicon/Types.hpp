@@ -31,77 +31,76 @@
 #ifndef SILICON_TYPES_HPP
 #define SILICON_TYPES_HPP
 
-#include <vector>
 #include <list>
+#include <vector>
 
 #include "boost/graph/adjacency_list.hpp"
 #include "gsl/pointers"
 
 #include "Allocator.hpp"
 
-namespace Si
-{
-    template <typename T>
-    using NotNull = gsl::strict_not_null<T>;
+namespace Si {
+template <typename T>
+using NotNull = gsl::strict_not_null<T>;
 
-    template <typename T>
-    using Vector = std::vector<T, Allocator<T>>;
+template <typename T>
+using Vector = std::vector<T, Allocator<T>>;
 
-    /**
-     * STL compliant data structure for storing an arbitrary amount of data.
-     */
-    template <typename T>
-    using List = std::list<T, Allocator<T>>;
+/**
+ * STL compliant data structure for storing an arbitrary amount of data.
+ */
+template <typename T>
+using List = std::list<T, Allocator<T>>;
 
-    /**
-     * Vector for use in Graphs.
-     */
-    struct GraphVector {};
+/**
+ * Vector for use in Graphs.
+ */
+struct GraphVector {
+};
 
-    /**
-     * List for use in Graphs.
-     */
-    struct GraphList {};
+/**
+ * List for use in Graphs.
+ */
+struct GraphList {
+};
 
 }
 
 /// @cond
 
-namespace boost
-{
+namespace boost {
 
-    template <class T>
-    struct container_gen<Si::GraphVector, T> {
-        typedef Si::Vector<T> type;
-    };
+template <class T>
+struct container_gen<Si::GraphVector, T> {
+    typedef Si::Vector<T> type;
+};
 
-    template <>
-    struct parallel_edge_traits<Si::GraphVector> {
-        typedef allow_parallel_edge_tag type;
-    };
+template <>
+struct parallel_edge_traits<Si::GraphVector> {
+    typedef allow_parallel_edge_tag type;
+};
 
-    template <class T>
-    struct container_gen<Si::GraphList, T> {
-        typedef Si::List<T> type;
-    };
+template <class T>
+struct container_gen<Si::GraphList, T> {
+    typedef Si::List<T> type;
+};
 
-    template <>
-    struct parallel_edge_traits<Si::GraphList> {
-        typedef allow_parallel_edge_tag type;
-    };
+template <>
+struct parallel_edge_traits<Si::GraphList> {
+    typedef allow_parallel_edge_tag type;
+};
 
 }
 
 /// @endcond
 
-namespace Si
-{
+namespace Si {
 
 /**
  * Container for representing relationships between objects.
  */
-    template <typename T, typename ContainerT = GraphVector>
-    using Graph = boost::adjacency_list<ContainerT, ContainerT, boost::bidirectionalS, T>;
+template <typename T, typename ContainerT = GraphVector>
+using Graph = boost::adjacency_list<ContainerT, ContainerT, boost::bidirectionalS, T>;
 }
 
-#endif //SILICON_TYPES_HPP
+#endif // SILICON_TYPES_HPP

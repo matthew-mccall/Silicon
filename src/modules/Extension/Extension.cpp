@@ -24,20 +24,19 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Silicon.hpp"
 #include "Silicon/Log.hpp"
+#include "Silicon/Silicon.hpp"
 
 #include "Extension.hpp"
-    
-namespace Extension
-{
-    void Initialize()
-    {
-        Si::Engine::Debug("Initialized Extension!");
-    }
 
-    void Deinitialize()
-    {
-        Si::Engine::Debug("Deinitalized Extension!");
-    }
+namespace Extension {
+void Initialize()
+{
+    Si::Engine::Debug("Initialized Extension!");
+}
+
+void Deinitialize()
+{
+    Si::Engine::Debug("Deinitalized Extension!");
+}
 } // namespace Extension

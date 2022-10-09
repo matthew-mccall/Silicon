@@ -29,91 +29,91 @@
 
 #include "spdlog/logger.h"
 
-namespace Si
-{
+namespace Si {
 
-    namespace Log
-    {
-        void Initialize();
-        void Deinitialize();
+namespace Log {
+    void Initialize();
 
-        std::shared_ptr<spdlog::logger> GetEngineLogger();
-        std::shared_ptr<spdlog::logger> GetClientLogger();
-    }
+    void Deinitialize();
 
-    template<typename... Args>
-    void Trace(Args&& ...args)
-    {
-        Log::GetClientLogger()->trace(std::forward<Args>(args)...);
-    }
+    std::shared_ptr<spdlog::logger> GetEngineLogger();
 
-    template<typename... Args>
-    void Info(Args&& ...args)
-    {
-        Log::GetClientLogger()->info(std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    void Debug(Args&& ...args)
-    {
-        Log::GetClientLogger()->debug(std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    void Warn(Args&& ...args)
-    {
-        Log::GetClientLogger()->warn(std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    void Error(Args&& ...args)
-    {
-        Log::GetClientLogger()->error(std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    void Critical(Args&& ...args)
-    {
-        Log::GetClientLogger()->critical(std::forward<Args>(args)...);
-    }
-
-    namespace Engine {
-        template<typename... Args>
-        void Trace(Args&& ...args)
-        {
-            Log::GetEngineLogger()->trace(std::forward<Args>(args)...);
-        }
-
-        template<typename... Args>
-        void Info(Args&& ...args)
-        {
-            Log::GetEngineLogger()->info(std::forward<Args>(args)...);
-        }
-
-        template<typename... Args>
-        void Debug(Args&& ...args)
-        {
-            Log::GetEngineLogger()->debug(std::forward<Args>(args)...);
-        }
-
-        template<typename... Args>
-        void Warn(Args&& ...args)
-        {
-            Log::GetEngineLogger()->warn(std::forward<Args>(args)...);
-        }
-
-        template<typename... Args>
-        void Error(Args&& ...args)
-        {
-            Log::GetEngineLogger()->error(std::forward<Args>(args)...);
-        }
-
-        template<typename... Args>
-        void Critical(Args&& ...args)
-        {
-            Log::GetEngineLogger()->critical(std::forward<Args>(args)...);
-        }
-    }
+    std::shared_ptr<spdlog::logger> GetClientLogger();
 }
 
-#endif //SILICON_LOG_HPP
+template <typename... Args>
+void Trace(Args&&... args)
+{
+    Log::GetClientLogger()->trace(std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+void Info(Args&&... args)
+{
+    Log::GetClientLogger()->info(std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+void Debug(Args&&... args)
+{
+    Log::GetClientLogger()->debug(std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+void Warn(Args&&... args)
+{
+    Log::GetClientLogger()->warn(std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+void Error(Args&&... args)
+{
+    Log::GetClientLogger()->error(std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+void Critical(Args&&... args)
+{
+    Log::GetClientLogger()->critical(std::forward<Args>(args)...);
+}
+
+namespace Engine {
+    template <typename... Args>
+    void Trace(Args&&... args)
+    {
+        Log::GetEngineLogger()->trace(std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    void Info(Args&&... args)
+    {
+        Log::GetEngineLogger()->info(std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    void Debug(Args&&... args)
+    {
+        Log::GetEngineLogger()->debug(std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    void Warn(Args&&... args)
+    {
+        Log::GetEngineLogger()->warn(std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    void Error(Args&&... args)
+    {
+        Log::GetEngineLogger()->error(std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    void Critical(Args&&... args)
+    {
+        Log::GetEngineLogger()->critical(std::forward<Args>(args)...);
+    }
+}
+}
+
+#endif // SILICON_LOG_HPP

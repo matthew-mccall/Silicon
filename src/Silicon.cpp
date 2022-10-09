@@ -26,28 +26,27 @@
 
 #include <iostream>
 
-#include "Silicon/Silicon.hpp"
 #include "Silicon/Log.hpp"
+#include "Silicon/Silicon.hpp"
 
 #include "Modules.hpp"
 
-namespace Si
+namespace Si {
+bool Initialize()
 {
-    bool Initialize()
-    {
-        Log::Initialize();
-        Engine::Debug("Initializing Modules!");
-        InitializeModules();
-        Engine::Debug("Initialized Modules!");
-        
-        return true;
-    }
+    Log::Initialize();
+    Engine::Debug("Initializing Modules!");
+    InitializeModules();
+    Engine::Debug("Initialized Modules!");
 
-    void Deinitialize()
-    {
-        Engine::Debug("Deinitializing Modules!");
-        DeinitializeModules();
-        Engine::Debug("Deinitialized Modules!");
-        Log::Deinitialize();
-    }
+    return true;
+}
+
+void Deinitialize()
+{
+    Engine::Debug("Deinitializing Modules!");
+    DeinitializeModules();
+    Engine::Debug("Deinitialized Modules!");
+    Log::Deinitialize();
+}
 } // namespace Engine

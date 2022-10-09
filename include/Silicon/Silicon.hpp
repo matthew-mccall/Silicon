@@ -29,10 +29,10 @@
 
 #include <string>
 
-namespace Si
-{
-    bool Initialize();
-    void Deinitialize();
+namespace Si {
+bool Initialize();
+
+void Deinitialize();
 } // namespace Engine
 
 #endif // ENGINE_CORE_HPP
