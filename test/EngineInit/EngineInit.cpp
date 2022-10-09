@@ -28,10 +28,17 @@
 // Created by Matthew McCall on 8/28/22.
 //
 
+#include <cstdlib>
+
 #include "Silicon/Silicon.hpp"
 
 int main(int argc, char** argv)
 {
-    Si::Initialize();
-    Si::Deinitialize();
+    if (Si::Initialize())
+    {
+        Si::Deinitialize();
+        return EXIT_SUCCESS;
+    }
+
+    return EXIT_FAILURE;
 }
