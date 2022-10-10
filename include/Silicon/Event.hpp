@@ -97,7 +97,7 @@ template <typename T>
 class Sub
 {
     template <typename U>
-    friend  void Si::Pub(const U& data);
+    friend void Si::Pub(const U& data);
     using Callback = std::function<void(const T&)>;
 
 public:
@@ -126,8 +126,8 @@ private:
 
 /**
  * Publishes an event of type T to all subscribers immediately.
- * @tparam T The type of event to publish.
- * @param data An instance of the event to broadcast to all subscribers.
+ * @tparam  T       The type of event to publish.
+ * @param   data    An instance of the event to broadcast to all subscribers.
  */
 template <class T>
 void Pub(const T& data)
@@ -138,7 +138,7 @@ void Pub(const T& data)
 }
 
 template <typename T>
-std::vector<NotNull<Sub<T>*>> Sub<T>::Subscribers {};
+std::vector<NotNull<Sub<T>*>> Sub<T>::Subscribers;
 
 }
 

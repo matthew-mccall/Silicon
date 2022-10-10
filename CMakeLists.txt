@@ -17,7 +17,7 @@ endif()
 
 project(Silicon VERSION 0.0.1)
 
-message(STATUS "Building Silicon Engine for: ${SI_PLATFORM}")
+message(STATUS "Building Silicon Engine ${PROJECT_VERSION} for ${SI_PLATFORM}")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -42,8 +42,9 @@ include(Desktop/AmendDependenciesList)
 include(Web/AmendDependenciesList)
 
 include(CTest)
-include(AddModule)
 include(AddSiliconTest)
+
+include(AddModule)
 
 AddModule(Extension)
 
@@ -54,7 +55,8 @@ add_library(${PROJECT_NAME}
         src/Silicon.cpp
         src/Modules.hpp
         src/Log.cpp
-        src/Event.cpp src/Node.cpp test/PubSub/PubSub.cpp test/SimpleNodes/SimpleNodes.cpp)
+        src/Event.cpp
+        src/Node.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
@@ -68,7 +70,7 @@ add_subdirectory(editor)
 
 if (SI_PLATFORM STREQUAL "Web")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
-endif()
+endif ()
 
 AddSiliconTest(EngineInit)
 AddSiliconTest(PubSub)

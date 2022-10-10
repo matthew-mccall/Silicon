@@ -55,8 +55,8 @@ public:
 
         ChildIterator& operator++();
         ChildIterator& operator--();
-        ChildIterator operator++(int);
-        ChildIterator operator--(int);
+        const ChildIterator operator++(int);
+        const ChildIterator operator--(int);
 
         bool operator==(const ChildIterator& other);
         bool operator!=(const ChildIterator& other);

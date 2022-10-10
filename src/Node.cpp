@@ -98,15 +98,15 @@ Node::ChildIterator& Node::ChildIterator::operator--()
     --m_itr;
     return *this;
 }
-Node::ChildIterator Node::ChildIterator::operator++(int)
+const Node::ChildIterator Node::ChildIterator::operator++(int)
 {
-    auto tmp = *this;
+    const auto tmp = *this;
     ++*this;
     return tmp;
 }
-Node::ChildIterator Node::ChildIterator::operator--(int)
+const Node::ChildIterator Node::ChildIterator::operator--(int)
 {
-    auto tmp = *this;
+    const auto tmp = *this;
     --*this;
     return tmp;
 }
