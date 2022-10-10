@@ -25,87 +25,32 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 8/19/22.
+// Created by Matthew McCall on 10/9/22.
 //
 
-#ifndef SILICON_TYPES_HPP
-#define SILICON_TYPES_HPP
+#include <string>
 
-#include <list>
-#include <vector>
+#include "Silicon/Event.hpp"
+#include "Silicon/Silicon.hpp"
+#include "Silicon/Log.hpp"
 
-#include "boost/graph/adjacency_list.hpp"
-#include "gsl/pointers"
-
-#include "Allocator.hpp"
-
-namespace Si {
-
-template <typename T>
-#ifdef NDEBUG
-using NotNull = gsl::not_null<T>;
-#else
-using NotNull = gsl::strict_not_null<T>;
-#endif
-
-template <typename T>
-using Vector = std::vector<T, Allocator<T>>;
-
-/**
- * STL compliant data structure for storing an arbitrary amount of data.
- */
-template <typename T>
-using List = std::list<T, Allocator<T>>;
-
-/**
- * Vector for use in Graphs.
- */
-struct GraphVector {
+struct CustomEvent
+{
+    std::string message;
 };
 
-/**
- * List for use in Graphs.
- */
-struct GraphList {
-};
+int main(int argc, char** argv)
+{
+    if (!Si::Initialize())
+    {
+        return EXIT_FAILURE;
+    }
 
+    Si::Sub<CustomEvent> sub([](const CustomEvent& e){
+        Si::Info(e.message);
+    });
+
+    Si::Pub<CustomEvent>({"Hello from Silicon Events!"});
+
+    Si::Deinitialize();
 }
-
-/// @cond
-
-namespace boost {
-
-template <class T>
-struct container_gen<Si::GraphVector, T> {
-    typedef Si::Vector<T> type;
-};
-
-template <>
-struct parallel_edge_traits<Si::GraphVector> {
-    typedef allow_parallel_edge_tag type;
-};
-
-template <class T>
-struct container_gen<Si::GraphList, T> {
-    typedef Si::List<T> type;
-};
-
-template <>
-struct parallel_edge_traits<Si::GraphList> {
-    typedef allow_parallel_edge_tag type;
-};
-
-}
-
-/// @endcond
-
-namespace Si {
-
-/**
- * Container for representing relationships between objects.
- */
-template <typename T, typename ContainerT = GraphVector>
-using Graph = boost::adjacency_list<ContainerT, ContainerT, boost::bidirectionalS, T>;
-}
-
-#endif // SILICON_TYPES_HPP

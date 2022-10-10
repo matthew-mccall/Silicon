@@ -54,7 +54,7 @@ add_library(${PROJECT_NAME}
         src/Silicon.cpp
         src/Modules.hpp
         src/Log.cpp
-        src/Event.cpp src/Node.cpp)
+        src/Event.cpp src/Node.cpp test/PubSub/PubSub.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
@@ -71,3 +71,4 @@ if (SI_PLATFORM STREQUAL "Web")
 endif()
 
 AddSiliconTest(EngineInit)
+AddSiliconTest(PubSub)

@@ -27,13 +27,12 @@
 #include <array>
 #include <memory>
 
-#include "spdlog/spdlog.h"
+#include "boost/assert.hpp"
 
 #include "spdlog/sinks/ringbuffer_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 #include "Silicon/Log.hpp"
-#include "Silicon/Types.hpp"
 
 namespace {
 std::shared_ptr<spdlog::logger> s_engineLogger;
@@ -52,11 +51,13 @@ void Log::Initialize()
 
     std::array<spdlog::sink_ptr, 2> engineSinks = {
         std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
-        s_engineLogHistory};
+        s_engineLogHistory
+    };
 
     std::array<spdlog::sink_ptr, 2> clientSinks = {
         std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
-        s_clientLogHistory};
+        s_clientLogHistory
+    };
 
     s_engineLogger = std::make_shared<spdlog::logger>("Engine", engineSinks.begin(), engineSinks.end());
     s_clientLogger = std::make_shared<spdlog::logger>("Client", clientSinks.begin(), clientSinks.end());
@@ -77,11 +78,13 @@ void Log::Deinitialize()
 
 std::shared_ptr<spdlog::logger> Log::GetEngineLogger()
 {
+    BOOST_ASSERT_MSG(s_engineLogger, "Logger not initialized! Did you call Si::Initialize()?");
     return s_engineLogger;
 }
 
 std::shared_ptr<spdlog::logger> Log::GetClientLogger()
 {
+    BOOST_ASSERT_MSG(s_clientLogger, "Logger not initialized! Did you call Si::Initialize()?");
     return s_clientLogger;
 }
 

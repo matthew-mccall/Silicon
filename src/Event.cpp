@@ -24,88 +24,30 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-//
-// Created by Matthew McCall on 8/19/22.
-//
+#include "Silicon/Event.hpp"
 
-#ifndef SILICON_TYPES_HPP
-#define SILICON_TYPES_HPP
-
-#include <list>
-#include <vector>
-
-#include "boost/graph/adjacency_list.hpp"
-#include "gsl/pointers"
-
-#include "Allocator.hpp"
-
-namespace Si {
-
-template <typename T>
-#ifdef NDEBUG
-using NotNull = gsl::not_null<T>;
-#else
-using NotNull = gsl::strict_not_null<T>;
-#endif
-
-template <typename T>
-using Vector = std::vector<T, Allocator<T>>;
-
-/**
- * STL compliant data structure for storing an arbitrary amount of data.
- */
-template <typename T>
-using List = std::list<T, Allocator<T>>;
-
-/**
- * Vector for use in Graphs.
- */
-struct GraphVector {
-};
-
-/**
- * List for use in Graphs.
- */
-struct GraphList {
-};
-
+namespace Si::Event {
+Window::Window(SDL_WindowEvent e)
+    : windowID(e.windowID)
+{
 }
 
-/// @cond
-
-namespace boost {
-
-template <class T>
-struct container_gen<Si::GraphVector, T> {
-    typedef Si::Vector<T> type;
-};
-
-template <>
-struct parallel_edge_traits<Si::GraphVector> {
-    typedef allow_parallel_edge_tag type;
-};
-
-template <class T>
-struct container_gen<Si::GraphList, T> {
-    typedef Si::List<T> type;
-};
-
-template <>
-struct parallel_edge_traits<Si::GraphList> {
-    typedef allow_parallel_edge_tag type;
-};
-
+WindowClose::WindowClose(SDL_WindowEvent e)
+    : Window(e)
+{
 }
 
-/// @endcond
-
-namespace Si {
-
-/**
- * Container for representing relationships between objects.
- */
-template <typename T, typename ContainerT = GraphVector>
-using Graph = boost::adjacency_list<ContainerT, ContainerT, boost::bidirectionalS, T>;
+WindowResize::WindowResize(SDL_WindowEvent e)
+    : Window(e)
+    , width(e.data1)
+    , height(e.data2)
+{
 }
 
-#endif // SILICON_TYPES_HPP
+WindowMove::WindowMove(SDL_WindowEvent e)
+    : Window(e)
+    , x(e.data1)
+    , y(e.data2)
+{
+}
+}

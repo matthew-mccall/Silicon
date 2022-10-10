@@ -25,87 +25,42 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 8/19/22.
+// Created by Matthew McCall on 10/9/22.
 //
 
-#ifndef SILICON_TYPES_HPP
-#define SILICON_TYPES_HPP
+#ifndef SILICON_NODE_HPP
+#define SILICON_NODE_HPP
 
-#include <list>
-#include <vector>
+#include "Types.hpp"
 
-#include "boost/graph/adjacency_list.hpp"
-#include "gsl/pointers"
+namespace Si
+{
 
-#include "Allocator.hpp"
+class Node
+{
+public:
 
-namespace Si {
+    using Graph = Graph<NotNull<Node*>, GraphVector>;
 
-template <typename T>
-#ifdef NDEBUG
-using NotNull = gsl::not_null<T>;
-#else
-using NotNull = gsl::strict_not_null<T>;
-#endif
+    Node();
+    Node(const Node&) = delete;
+    Node(Node&&) = delete;
 
-template <typename T>
-using Vector = std::vector<T, Allocator<T>>;
+    void addChild(NotNull<Node*>);
+    void addChild(Node&);
 
-/**
- * STL compliant data structure for storing an arbitrary amount of data.
- */
-template <typename T>
-using List = std::list<T, Allocator<T>>;
+    virtual ~Node();
 
-/**
- * Vector for use in Graphs.
- */
-struct GraphVector {
-};
+private:
+    unsigned m_id = 0;
+    Graph::vertex_descriptor m_graphDescriptor;
 
-/**
- * List for use in Graphs.
- */
-struct GraphList {
+    Node* m_parent = nullptr;
+
+    static unsigned s_currentID;
+    static Graph s_graph;
 };
 
 }
 
-/// @cond
-
-namespace boost {
-
-template <class T>
-struct container_gen<Si::GraphVector, T> {
-    typedef Si::Vector<T> type;
-};
-
-template <>
-struct parallel_edge_traits<Si::GraphVector> {
-    typedef allow_parallel_edge_tag type;
-};
-
-template <class T>
-struct container_gen<Si::GraphList, T> {
-    typedef Si::List<T> type;
-};
-
-template <>
-struct parallel_edge_traits<Si::GraphList> {
-    typedef allow_parallel_edge_tag type;
-};
-
-}
-
-/// @endcond
-
-namespace Si {
-
-/**
- * Container for representing relationships between objects.
- */
-template <typename T, typename ContainerT = GraphVector>
-using Graph = boost::adjacency_list<ContainerT, ContainerT, boost::bidirectionalS, T>;
-}
-
-#endif // SILICON_TYPES_HPP
+#endif //SILICON_NODE_HPP
