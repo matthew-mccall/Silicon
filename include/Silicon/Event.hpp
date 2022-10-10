@@ -108,7 +108,7 @@ public:
     explicit Sub(const Callback& func)
         : Func(func)
     {
-        Sub<T>::Subscribers.emplace_back(this);
+        Sub<T>::Subscribers.push_back(NotNull<Sub<T>*>(this));
     }
 
     ~Sub()
