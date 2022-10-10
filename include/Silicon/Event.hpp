@@ -96,8 +96,8 @@ void Pub(const T& data);
 template <typename T>
 class Sub
 {
-
-    friend void Si::Pub(const T& data);
+    template <typename U>
+    friend  void Si::Pub(const U& data);
     using Callback = std::function<void(const T&)>;
 
 public:
