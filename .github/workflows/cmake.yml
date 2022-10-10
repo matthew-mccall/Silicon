@@ -31,7 +31,6 @@ jobs:
         # A list of files, directories, and wildcard patterns to cache and restore
         path: |
           ${{github.workspace}}/build
-          build
         # An explicit key for restoring and saving the cache
         key: ${{ runner.os }}-build-${{ env.BUILD_TYPE }}
 
@@ -43,6 +42,11 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      
+    - name: Test
+      run: |
+        cd ${{github.workspace}}/build
+        ctest -C ${{ env.BUILD_TYPE }}
       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
