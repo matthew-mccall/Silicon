@@ -54,7 +54,7 @@ add_library(${PROJECT_NAME}
         src/Silicon.cpp
         src/Modules.hpp
         src/Log.cpp
-        src/Event.cpp src/Node.cpp test/PubSub/PubSub.cpp)
+        src/Event.cpp src/Node.cpp test/PubSub/PubSub.cpp test/SimpleNodes/SimpleNodes.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
@@ -72,3 +72,4 @@ endif()
 
 AddSiliconTest(EngineInit)
 AddSiliconTest(PubSub)
+AddSiliconTest(SimpleNodes)

@@ -28,62 +28,51 @@
 // Created by Matthew McCall on 10/9/22.
 //
 
-#ifndef SILICON_NODE_HPP
-#define SILICON_NODE_HPP
+#include <utility>
 
-#include "Types.hpp"
+#include "Silicon/Silicon.hpp"
+#include "Silicon/Log.hpp"
+#include "Silicon/Node.hpp"
 
-namespace Si
-{
-
-class Node
+class MessageNode : public Si::Node
 {
 public:
+    MessageNode(std::string  message)
+        : m_message(std::move(message)) { }
 
-    using Graph = Graph<NotNull<Node*>, GraphList>;
-
-    class ChildIterator
+    void printMessage() const
     {
-    public:
-        ChildIterator(Graph::adjacency_iterator);
+        Si::Info(m_message);
 
-        Node& operator*();
-        Node* operator->();
+        for (const Node& i : *this)
+        {
+            dynamic_cast<const MessageNode*>(&i)->printMessage();
+        }
+    }
 
-        ChildIterator& operator++();
-        ChildIterator& operator--();
-        ChildIterator operator++(int);
-        ChildIterator operator--(int);
-
-        bool operator==(const ChildIterator& other);
-        bool operator!=(const ChildIterator& other);
-
-    private:
-        Graph::adjacency_iterator m_itr;
-    };
-
-    Node();
-    Node(const Node&) = delete;
-    Node(Node&&) = delete;
-
-    void addChild(NotNull<Node*>);
-    void addChild(Node&);
-
-    [[nodiscard]] ChildIterator begin() const;
-    [[nodiscard]] ChildIterator end() const;
-
-    virtual ~Node();
-
-protected:
-    unsigned m_id = 0;
-    Graph::vertex_descriptor m_graphDescriptor;
-
-    Node* m_parent = nullptr;
-
-    static unsigned s_currentID;
-    static Graph s_graph;
+private:
+    std::string m_message;
 };
 
-}
+int main(int argc, char** argv)
+{
+    if (!Si::Initialize())
+    {
+        return EXIT_FAILURE;
+    }
+    {
+        MessageNode root {"Root Node"};
+        MessageNode nodeA {"Node A"};
+        MessageNode nodeB {"Node B"};
+        MessageNode nodeC {"Node C"};
 
-#endif //SILICON_NODE_HPP
+        root.addChild(nodeA);
+        root.addChild(nodeB);
+
+        nodeA.addChild(nodeC);
+
+        root.printMessage();
+    }
+
+    Si::Deinitialize();
+}

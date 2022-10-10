@@ -45,7 +45,7 @@ Node::Node()
 void Node::addChild(NotNull<Node*> node)
 {
     boost::add_edge(m_graphDescriptor, node->m_graphDescriptor, s_graph);
-    m_parent = node;
+    node->m_parent = this;
 }
 
 void Node::addChild(Node& node)
@@ -55,11 +55,68 @@ void Node::addChild(Node& node)
 
 Node::~Node()
 {
-    if (m_parent)
+    for (Node& i : *this)
     {
-        boost::clear_vertex(m_graphDescriptor, s_graph);
-        boost::remove_vertex(m_graphDescriptor, s_graph);
+        i.m_parent = nullptr;
     }
+
+    boost::clear_vertex(m_graphDescriptor, s_graph);
+    boost::remove_vertex(m_graphDescriptor, s_graph);
+}
+
+Node::ChildIterator Node::begin() const
+{
+    auto [begin, end] = boost::adjacent_vertices(m_graphDescriptor, s_graph);
+    return { begin };
+}
+
+Node::ChildIterator Node::end() const
+{
+    auto [begin, end] = boost::adjacent_vertices(m_graphDescriptor, s_graph);
+    return { end };
+}
+
+Node::ChildIterator::ChildIterator(Graph::adjacency_iterator itr)
+: m_itr(itr) { }
+
+Node& Node::ChildIterator::operator*()
+{
+    return *s_graph[static_cast<Node::Graph::vertex_descriptor>(*m_itr)];
+}
+
+Node* Node::ChildIterator::operator->()
+{
+    return s_graph[static_cast<Node::Graph::vertex_descriptor>(*m_itr)];
+}
+Node::ChildIterator& Node::ChildIterator::operator++()
+{
+    ++m_itr;
+    return *this;
+}
+Node::ChildIterator& Node::ChildIterator::operator--()
+{
+    --m_itr;
+    return *this;
+}
+Node::ChildIterator Node::ChildIterator::operator++(int)
+{
+    auto tmp = *this;
+    ++*this;
+    return tmp;
+}
+Node::ChildIterator Node::ChildIterator::operator--(int)
+{
+    auto tmp = *this;
+    --*this;
+    return tmp;
+}
+bool Node::ChildIterator::operator==(const ChildIterator& other)
+{
+    return m_itr == other.m_itr;
+}
+bool Node::ChildIterator::operator!=(const ChildIterator& other)
+{
+    return !(*this == other);
 }
 
 }
