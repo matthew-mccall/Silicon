@@ -36,16 +36,19 @@
 namespace Si
 {
 
+class Node;
+
+using NodeGraph = Graph<NotNull<Node*>, GraphList>;
+
 class Node
 {
 public:
 
-    using Graph = Graph<NotNull<Node*>, GraphList>;
 
     class ChildIterator
     {
     public:
-        ChildIterator(Graph::adjacency_iterator);
+        explicit ChildIterator(NodeGraph::adjacency_iterator);
 
         Node& operator*();
         Node* operator->();
@@ -59,7 +62,7 @@ public:
         bool operator!=(const ChildIterator& other);
 
     private:
-        Graph::adjacency_iterator m_itr;
+        NodeGraph::adjacency_iterator m_itr;
     };
 
     Node();
@@ -76,12 +79,12 @@ public:
 
 protected:
     unsigned m_id = 0;
-    Graph::vertex_descriptor m_graphDescriptor;
+    NodeGraph::vertex_descriptor m_graphDescriptor;
 
     Node* m_parent = nullptr;
 
     static unsigned s_currentID;
-    static Graph s_graph;
+    static NodeGraph s_graph;
 };
 
 }

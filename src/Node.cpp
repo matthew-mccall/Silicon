@@ -34,7 +34,7 @@ namespace Si
 {
 
 unsigned Node::s_currentID = 0;
-Node::Graph Node::s_graph;
+NodeGraph Node::s_graph;
 
 Node::Node()
     : m_id(s_currentID++)
@@ -67,26 +67,26 @@ Node::~Node()
 Node::ChildIterator Node::begin() const
 {
     auto [begin, end] = boost::adjacent_vertices(m_graphDescriptor, s_graph);
-    return { begin };
+    return Node::ChildIterator { begin };
 }
 
 Node::ChildIterator Node::end() const
 {
     auto [begin, end] = boost::adjacent_vertices(m_graphDescriptor, s_graph);
-    return { end };
+    return Node::ChildIterator { end };
 }
 
-Node::ChildIterator::ChildIterator(Graph::adjacency_iterator itr)
+Node::ChildIterator::ChildIterator(NodeGraph::adjacency_iterator itr)
 : m_itr(itr) { }
 
 Node& Node::ChildIterator::operator*()
 {
-    return *s_graph[static_cast<Node::Graph::vertex_descriptor>(*m_itr)];
+    return *s_graph[static_cast<NodeGraph::vertex_descriptor>(*m_itr)];
 }
 
 Node* Node::ChildIterator::operator->()
 {
-    return s_graph[static_cast<Node::Graph::vertex_descriptor>(*m_itr)];
+    return s_graph[static_cast<NodeGraph::vertex_descriptor>(*m_itr)];
 }
 Node::ChildIterator& Node::ChildIterator::operator++()
 {
