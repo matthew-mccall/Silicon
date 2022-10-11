@@ -10,3 +10,6 @@
 [submodule "libs/SDL"]
 	path = libs/SDL
 	url = https://github.com/libsdl-org/SDL.git
+[submodule "libs/boost"]
+	path = libs/boost
+	url = https://github.com/boostorg/boost.git
