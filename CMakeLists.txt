@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
 if (NOT SI_PLATFORM)
     set(SI_PLATFORM "Desktop")
