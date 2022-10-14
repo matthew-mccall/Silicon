@@ -30,7 +30,7 @@ cmake --build <your preferred folder>
 
 ### Linking
 Silicon at its core is designed to be used as a static library. In other words, you call Silicon as demonstrated in [test/EngineInit/EngineInit.cpp](test/EngineInit/EngineInit.cpp):
-```c++
+```cpp
 #include <cstdlib>
 
 #include "Silicon/Silicon.hpp"
