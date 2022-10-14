@@ -58,6 +58,8 @@ add_library(${PROJECT_NAME}
         src/Event.cpp
         src/Node.cpp)
 
+add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
+
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src")
