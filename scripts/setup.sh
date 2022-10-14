@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #
 # BSD 2-Clause License
@@ -28,21 +28,29 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-if ! ls boost/version.hpp ; then
-  if ! ls | grep "bootstrap" ; then
-    if ! pwd | grep "/libs/boost" ; then
+if [ ! -f boost/version.hpp ]; then
+  if [ ! -f bootstrap.sh ] ; then
+    if ! pwd | grep -q "/libs/boost" ; then
       set HAS_CD
-      cd ./libs/boost || exit
+      if pwd | grep -q "/scripts" ; then
+        cd ../libs/boost || exit
+      else
+        cd ./libs/boost || exit
+      fi
     fi
   fi
 
+  if [ ! -f boost/version.hpp ]; then
     echo "Initializing Boost for Silicon Desktop..."
 
     ./bootstrap.sh
     ./b2 headers
+  else
+    echo "Found Boost for Silicon Desktop!"
+  fi
 fi
 
-if [ "$HAS_CD" ]; then
+if [ -n "$HAS_CD" ]; then
   cd - || exit
 fi
 
