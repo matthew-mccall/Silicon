@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: true
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@1.9.4
       - name: Setup Pages
