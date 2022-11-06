@@ -32,7 +32,7 @@ jobs:
         restore-keys: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
 
     - name: Update Submodules
-      run: git submodules update --init --recursive
+      run: git submodule update --init --recursive
 
     - name: Install CMake
       run: |
