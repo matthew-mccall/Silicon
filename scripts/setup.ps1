@@ -14,7 +14,14 @@ if (!(Test-Path -Path "boost/version.hpp")) {
     {
         Write-Output "Initializing Boost for Silicon Desktop..."
 
-        ./bootstrap.sh
+        if ([Environment]::OSVersion.Platform.Equals([PlatformID]::Win32NT))
+        {
+            ./bootstrap.bat
+        }
+        else
+        {
+            ./bootstrap.sh
+        }
         ./b2 headers
     }
     else
