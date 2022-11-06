@@ -11,13 +11,9 @@ Silicon includes the source (and licences to redistribute the source) of its dep
 - Emscripten (Only if building for the Web)
 
 ## Generating
-
-> #### Dependencies
 > Make sure to run `git submodule update --init --recursive` to download and update all dependencies
 
 ### For Desktop
-
-> #### Boost 
 > Silicon Desktop depends on Boost, which needs some pre-building steps itself. Silicon provides scripts to assist with this. Run `scripts/setup.sh` (macOS, Linux only), or `scripts/setup.ps1` (Any supported platform with PowerShell 7 or newer installed) from Silicon's root directory.
 ```shell
 cmake -G <your preferred tool> -B <your preferred folder> .
