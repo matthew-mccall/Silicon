@@ -18,27 +18,21 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Cache Dependencies
+    - uses: actions/checkout@v3
+
+    - name: Cache
       uses: actions/cache@v3.0.7
       with:
         # A list of files, directories, and wildcard patterns to cache and restore
         path: |
           ${{github.workspace}}/lib
-        # An explicit key for restoring and saving the cache
-        key: ${{ runner.os }}-lib-${{ matrix.BUILD_TYPE }}
-
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        
-    - name: Cache Build
-      uses: actions/cache@v3.0.7
-      with:
-        # A list of files, directories, and wildcard patterns to cache and restore
-        path: |
           ${{github.workspace}}/build
         # An explicit key for restoring and saving the cache
-        key: ${{ runner.os }}-build-${{ matrix.BUILD_TYPE }}
+        key: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
+        restore-keys: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
+
+    - name: Update Submodules
+      run: git submodules update --init --recursive
 
     - name: Install CMake
       run: |
