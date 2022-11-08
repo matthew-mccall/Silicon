@@ -96,8 +96,7 @@ void Pub(const T& data);
 template <typename T>
 class Sub
 {
-    template <typename U>
-    friend void Si::Pub(const U& data);
+    friend void Si::Pub<T>(const T& data);
     using Callback = std::function<void(const T&)>;
 
 public:
@@ -105,7 +104,7 @@ public:
      * Creates a new subscriber with the function to call on an event publish.
      * @param func The function to run when the event is called.
      */
-    explicit Sub(const Callback& func)
+    explicit Sub(Callback func)
         : Func(func)
     {
         Sub<T>::Subscribers.push_back(NotNull<Sub<T>*>(this));
@@ -121,7 +120,7 @@ public:
 
 private:
     static std::vector<NotNull<Sub<T>*>> Subscribers;
-    const Callback& Func;
+    Callback Func;
 };
 
 /**
