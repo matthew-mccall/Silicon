@@ -50,19 +50,17 @@ AddModule(Extension)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
 
-add_library(${PROJECT_NAME}
-        ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp
-        src/Silicon.cpp
-        src/Modules.hpp
-        src/Log.cpp
-        src/Event.cpp
-        src/Node.cpp)
+set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SRC})
+
+add_library(${PROJECT_NAME} ${SRC})
 
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
-target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/modules")
 
 include(Desktop/BuildOptions)
