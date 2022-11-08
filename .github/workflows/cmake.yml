@@ -13,7 +13,7 @@ jobs:
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
+        os: [ ubuntu-latest, windows-latest ]
         BUILD_TYPE: [ Release, Debug ]
     runs-on: ${{ matrix.os }}
 

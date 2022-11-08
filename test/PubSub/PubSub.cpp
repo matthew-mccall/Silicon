@@ -39,6 +39,11 @@ struct CustomEvent
     std::string message;
 };
 
+void printMessage(const CustomEvent& e)
+{
+    Si::Info(e.message);
+}
+
 int main(int argc, char** argv)
 {
     if (!Si::Initialize())
@@ -46,9 +51,7 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    Si::Sub<CustomEvent> sub([](const CustomEvent& e){
-        Si::Info(e.message);
-    });
+    Si::Sub<CustomEvent> sub(printMessage);
 
     Si::Pub<CustomEvent>({"Hello from Silicon Events!"});
 
