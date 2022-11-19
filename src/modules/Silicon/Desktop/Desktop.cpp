@@ -24,13 +24,39 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#if !defined(EXTENSION_HPP)
-#define EXTENSION_HPP
+//
+// Created by Matthew McCall on 11/19/22.
+//
 
-namespace Extension {
-void Initialize();
+#include "SDL.h"
 
-void Deinitialize();
-} // namespace Extension
+#include "Silicon/Event.hpp"
 
-#endif // EXTENSION_HPP
+#include "Desktop.hpp"
+
+namespace Si::Desktop
+{
+void Initialize()
+{
+    SDL_Init(SDL_INIT_VIDEO);
+}
+
+void ProcessEvents()
+{
+    SDL_Event e;
+    while (SDL_PollEvent(&e))
+    {
+        switch (e.type) {
+        case SDL_QUIT:
+            Si::Pub(Event::AppQuit());
+            break ;
+        }
+    }
+}
+
+void Deinitialize()
+{
+    SDL_Quit();
+}
+
+}

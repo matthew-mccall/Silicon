@@ -24,8 +24,18 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Event.hpp"
+//
+// Created by Matthew McCall on 11/19/22.
+//
 
-namespace Si::Event {
+#include "Silicon/Silicon.hpp"
+
+namespace Si
+{
+
+void Run()
+{
+    while (Loop()) {}
+}
 
 }

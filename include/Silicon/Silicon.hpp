@@ -27,10 +27,16 @@
 #if !defined(ENGINE_CORE_HPP)
 #define ENGINE_CORE_HPP
 
+#include <functional>
 #include <string>
 
 namespace Si {
 bool Initialize();
+
+void SetLoop(std::function<bool()> loop);
+bool Loop();
+
+void Run();
 
 void Deinitialize();
 } // namespace Engine

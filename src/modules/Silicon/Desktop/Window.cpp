@@ -24,8 +24,26 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Event.hpp"
+//
+// Created by Matthew McCall on 11/19/22.
+//
 
-namespace Si::Event {
+#include "Window.hpp"
 
+#include "SDL.h"
+#include "SDL_video.h"
+
+namespace Si {
+
+Window::Window()
+{
+    SDL_Window *window = SDL_CreateWindow("Silicon Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_ALLOW_HIGHDPI);
+    m_id = SDL_GetWindowID(window);
 }
+
+Window::~Window()
+{
+    SDL_DestroyWindow(SDL_GetWindowFromID(m_id));
+}
+
+} // Desktop

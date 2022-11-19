@@ -24,19 +24,27 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Log.hpp"
-#include "Silicon/Silicon.hpp"
+//
+// Created by Matthew McCall on 11/19/22.
+//
 
-#include "Extension.hpp"
+#ifndef SILICON_WINDOW_HPP
+#define SILICON_WINDOW_HPP
 
-namespace Extension {
-void Initialize()
+#include <cstdint>
+
+namespace Si {
+
+class Window
 {
-    Si::Engine::Debug("Initialized Extension!");
-}
+public:
+    Window();
+    ~Window();
 
-void Deinitialize()
-{
-    Si::Engine::Debug("Deinitalized Extension!");
-}
-} // namespace Extension
+private:
+    std::uint32_t m_id {};
+};
+
+} // Desktop
+
+#endif // SILICON_WINDOW_HPP

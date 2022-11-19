@@ -25,13 +25,21 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
+#include <utility>
 
 #include "Silicon/Log.hpp"
 #include "Silicon/Silicon.hpp"
 
 #include "Modules.hpp"
 
+namespace {
+
+    std::function<bool()> s_loop;
+
+}
+
 namespace Si {
+
 bool Initialize()
 {
     Log::Initialize();
@@ -48,5 +56,15 @@ void Deinitialize()
     DeinitializeModules();
     Engine::Debug("Deinitialized Modules!");
     Log::Deinitialize();
+}
+
+void SetLoop(std::function<bool()> loop)
+{
+    s_loop = std::move(loop);
+}
+
+bool Loop()
+{
+    return s_loop();
 }
 } // namespace Engine

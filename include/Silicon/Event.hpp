@@ -50,40 +50,6 @@ namespace Event {
     struct AppQuit {
     };
 
-    /**
-     * Parent type for all Window events.
-     */
-    struct Window {
-        Window(SDL_WindowEvent);
-
-        std::uint32_t windowID;
-    };
-
-    /**
-     * Published when a window is closed.
-     */
-    struct WindowClose : public Window {
-        WindowClose(SDL_WindowEvent);
-    };
-
-    /**
-     * Published when a window is resized.
-     */
-    struct WindowResize : public Window {
-        WindowResize(SDL_WindowEvent);
-
-        std::uint32_t width, height;
-    };
-
-    /**
-     * Published when a window is moved.
-     */
-    struct WindowMove : public Window {
-        WindowMove(SDL_WindowEvent);
-
-        std::uint32_t x, y;
-    };
-
 }
 
 template <typename T>

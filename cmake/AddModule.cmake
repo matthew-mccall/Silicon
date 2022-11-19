@@ -4,13 +4,13 @@ function(AddModule MODULE_NAME)
 	set(LOCAL_MODULE_DEINIT_FUNCS ${ENGINE_MODULE_DEINIT_FUNCS})
 	set(LOCAL_MODULES ${ENGINE_MODULES})
 	
-	string(APPEND LOCAL_MODULE_INCLUDES "#include \"${MODULE_NAME}/${MODULE_NAME}.hpp\"\n")
-    string(APPEND LOCAL_MODULE_INIT_FUNCS "        ${MODULE_NAME}::Initialize();\n")
-    string(APPEND LOCAL_MODULE_DEINIT_FUNCS "        ${MODULE_NAME}::Deinitialize();\n")
+	string(APPEND LOCAL_MODULE_INCLUDES "#include \"Silicon/${MODULE_NAME}/${MODULE_NAME}.hpp\"\n")
+    string(APPEND LOCAL_MODULE_INIT_FUNCS "        Si::${MODULE_NAME}::Initialize();\n")
+    string(APPEND LOCAL_MODULE_DEINIT_FUNCS "        Si::${MODULE_NAME}::Deinitialize();\n")
 	
     list(APPEND LOCAL_MODULES ${MODULE_NAME})
     
-    add_subdirectory("src/modules/${MODULE_NAME}")
+    add_subdirectory("src/modules/Silicon/${MODULE_NAME}")
 
 	set(ENGINE_MODULE_INCLUDES ${LOCAL_MODULE_INCLUDES} PARENT_SCOPE)
 	set(ENGINE_MODULE_INIT_FUNCS ${LOCAL_MODULE_INIT_FUNCS} PARENT_SCOPE)

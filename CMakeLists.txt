@@ -46,11 +46,15 @@ include(AddSiliconTest)
 
 include(AddModule)
 
-AddModule(Extension)
+# AddModule(Extension)
+AddModule(Desktop)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
 
 set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp)
+
+include(Desktop/AmendSourcesList)
+include(Web/AmendSourcesList)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SRC})
 
