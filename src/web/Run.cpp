@@ -28,6 +28,8 @@
 // Created by Matthew McCall on 11/19/22.
 //
 
+#include <emscripten.h>
+
 #include "Silicon/Silicon.hpp"
 
 namespace Si
@@ -35,7 +37,7 @@ namespace Si
 
 void Run()
 {
-
+    emscripten_set_main_loop([](){ Loop(); }, 0, true);
 }
 
 }
