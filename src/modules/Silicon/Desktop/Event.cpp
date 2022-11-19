@@ -30,18 +30,23 @@
 
 #include "SDL.h"
 
-#include "Desktop.hpp"
+#include "Silicon/Event.hpp"
+
+#include "Event.hpp"
 
 namespace Si::Desktop
 {
-void Initialize()
-{
-    SDL_Init(SDL_INIT_VIDEO);
-}
 
-void Deinitialize()
+void ProcessEvents()
 {
-    SDL_Quit();
+    SDL_Event e;
+    while (SDL_PollEvent(&e)) {
+        switch (e.type) {
+        case SDL_QUIT:
+            Si::Pub(Event::AppQuit());
+            break;
+        }
+    }
 }
 
 }

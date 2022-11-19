@@ -28,12 +28,14 @@
 // Created by Matthew McCall on 11/19/22.
 //
 
-#ifndef SILICON_EVENT_HPP
-#define SILICON_EVENT_HPP
+#ifndef SILICON_DESKTOP_EVENT_HPP
+#define SILICON_DESKTOP_EVENT_HPP
 
-namespace Si::Desktop::Event
+namespace Si::Desktop
 {
+
+void ProcessEvents();
 
 }
 
-#endif // SILICON_EVENT_HPP
+#endif // SILICON_DESKTOP_EVENT_HPP

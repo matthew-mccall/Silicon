@@ -35,8 +35,6 @@ namespace Si::Desktop
 {
 void Initialize();
 
-void ProcessEvents();
-
 void Deinitialize();
 }
 
