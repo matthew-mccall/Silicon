@@ -30,14 +30,13 @@
 
 #include "Window.hpp"
 
-#include "SDL.h"
 #include "SDL_video.h"
 
 namespace Si {
 
-Window::Window()
+Window::Window(const std::string& name, std::uint32_t width, std::uint32_t height)
 {
-    SDL_Window *window = SDL_CreateWindow("Silicon Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_Window *window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, static_cast<int>(width), static_cast<int>(height), SDL_WINDOW_ALLOW_HIGHDPI);
     m_id = SDL_GetWindowID(window);
 }
 

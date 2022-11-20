@@ -32,13 +32,14 @@
 #define SILICON_WINDOW_HPP
 
 #include <cstdint>
+#include <string>
 
 namespace Si {
 
 class Window
 {
 public:
-    Window();
+    explicit Window(const std::string& name = "Silicon Engine", std::uint32_t width = 800, std::uint32_t height = 600);
     ~Window();
 
 private:
