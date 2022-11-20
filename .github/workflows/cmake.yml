@@ -15,6 +15,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
         BUILD_TYPE: [ Release, Debug ]
+        platform: [ Desktop, Web ] 
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -41,11 +42,17 @@ jobs:
         sudo snap install cmake --classic
         cmake --version
       if: ${{ matrix.os == 'ubuntu-latest' }}
+      
+    - name: Setup Emscripten toolchain
+  # You may pin to the exact commit or the version.
+  # uses: mymindstorm/setup-emsdk@29ba4851d6da084ffdc1e0fc390efadbd75df9d1
+      uses: mymindstorm/setup-emsdk@v11
+      if: ${{ matrix.platform == 'Web' }}
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{matrix.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{matrix.BUILD_TYPE}} -DSI_PLATFORM=${{ matrix.platform }}
 
     - name: Build
       # Build your program with the given configuration
