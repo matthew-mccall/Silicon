@@ -30,23 +30,24 @@
 
 #include <utility>
 
-#include "Silicon/Silicon.hpp"
 #include "Silicon/Log.hpp"
 #include "Silicon/Node.hpp"
+#include "Silicon/Silicon.hpp"
 
 class MessageNode : public Si::Node
 {
 public:
-    MessageNode(std::string  message)
-        : m_message(std::move(message)) { }
+    explicit MessageNode(std::string message)
+        : m_message(std::move(message))
+    {
+    }
 
     void printMessage() const
     {
         Si::Info(m_message);
 
-        for (const Node& i : *this)
-        {
-            dynamic_cast<const MessageNode*>(&i)->printMessage();
+        for (const Node &i : *this) {
+            dynamic_cast<const MessageNode &>(i).printMessage();
         }
     }
 
@@ -54,10 +55,9 @@ private:
     std::string m_message;
 };
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    if (!Si::Initialize())
-    {
+    if (!Si::Initialize()) {
         return EXIT_FAILURE;
     }
     {
