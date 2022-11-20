@@ -11,6 +11,10 @@ elseif(SI_PLATFORM STREQUAL "Web")
     endif()
 
     set(CMAKE_TOOLCHAIN_FILE "$ENV{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake")
+
+    if (NOT EXISTS ${CMAKE_TOOLCHAIN_FILE})
+        message(FATAL_ERROR "Emscripten toolchain file not found!")
+    endif()
 else()
     message(FATAL_ERROR "Invalid platform specified at SI_PLATFORM! Must either be \"Desktop\" or \"Web\".")
 endif()
