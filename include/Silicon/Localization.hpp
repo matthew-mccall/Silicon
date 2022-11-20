@@ -24,51 +24,24 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <utility>
+//
+// Created by Matthew McCall on 11/20/22.
+//
 
-#include "boost/assert.hpp"
+#ifndef SILICON_LOCALIZATION_HPP
+#define SILICON_LOCALIZATION_HPP
 
-#include "Silicon/Localization.hpp"
-#include "Silicon/Log.hpp"
-#include "Silicon/Silicon.hpp"
-
-#include "Modules.hpp"
-
-namespace {
-
-std::function<bool()> s_loop;
-
-}
+#include <string>
 
 namespace Si {
 
-bool Initialize()
-{
-    Log::Initialize();
-    Engine::Debug(Si::GetLocalized("Initializing Modules!"));
-    InitializeModules();
-    Engine::Debug(Si::GetLocalized("Initialized Modules!"));
+enum class Locale {
+    en_US
+};
 
-    return true;
+void SetLocale(Locale locale);
+std::string GetLocalized(const std::string &key);
+
 }
 
-void Deinitialize()
-{
-    Engine::Debug(Si::GetLocalized("Deinitializing Modules!"));
-    DeinitializeModules();
-    Engine::Debug(Si::GetLocalized("Deinitialized Modules!"));
-    Log::Deinitialize();
-}
-
-void SetLoop(std::function<bool()> loop)
-{
-    s_loop = std::move(loop);
-}
-
-bool Loop()
-{
-    BOOST_ASSERT_MSG(s_loop, Si::GetLocalized("Loop function not defined! Make sure you set one with Si::SetLoop()").c_str());
-
-    return s_loop();
-}
-} // namespace Engine
+#endif // SILICON_LOCALIZATION_HPP

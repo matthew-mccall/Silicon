@@ -2,22 +2,21 @@ cmake_minimum_required(VERSION 3.16)
 
 if (NOT SI_PLATFORM)
     set(SI_PLATFORM "Desktop")
-endif()
+endif ()
 
 if (SI_PLATFORM STREQUAL "Desktop")
-elseif(SI_PLATFORM STREQUAL "Web")
+elseif (SI_PLATFORM STREQUAL "Web")
     if (NOT DEFINED ENV{EMSDK})
         message(FATAL_ERROR "Could not find Emscripten! Please set your EMSDK environment variable")
-    endif()
+    endif ()
 
     set(CMAKE_TOOLCHAIN_FILE "$ENV{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake")
 
-    if (NOT EXISTS ${CMAKE_TOOLCHAIN_FILE})
-        message(FATAL_ERROR "Emscripten toolchain file not found!")
-    endif()
-else()
+    set(SPDLOG_BUILD_SHARED OFF)
+    set(BUILD_SHARED_LIBS OFF)
+else ()
     message(FATAL_ERROR "Invalid platform specified at SI_PLATFORM! Must either be \"Desktop\" or \"Web\".")
-endif()
+endif ()
 
 project(Silicon VERSION 0.0.1)
 
@@ -50,12 +49,11 @@ include(AddSiliconTest)
 
 include(AddModule)
 
-# AddModule(Extension)
 AddModule(Desktop)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
 
-set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp)
+set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp src/Localization.cpp include/Silicon/Localization.hpp)
 
 include(Desktop/AmendSourcesList)
 include(Web/AmendSourcesList)
@@ -66,7 +64,7 @@ add_library(${PROJECT_NAME} ${SRC})
 
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${ENGINE_MODULES})
+target_link_libraries(${PROJECT_NAME} PUBLIC ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/modules")

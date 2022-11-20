@@ -32,6 +32,7 @@
 #include "spdlog/sinks/ringbuffer_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
+#include "Silicon/Localization.hpp"
 #include "Silicon/Log.hpp"
 
 namespace {
@@ -51,16 +52,14 @@ void Log::Initialize()
 
     std::array<spdlog::sink_ptr, 2> engineSinks = {
         std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
-        s_engineLogHistory
-    };
+        s_engineLogHistory};
 
     std::array<spdlog::sink_ptr, 2> clientSinks = {
         std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
-        s_clientLogHistory
-    };
+        s_clientLogHistory};
 
-    s_engineLogger = std::make_shared<spdlog::logger>("Engine", engineSinks.begin(), engineSinks.end());
-    s_clientLogger = std::make_shared<spdlog::logger>("Client", clientSinks.begin(), clientSinks.end());
+    s_engineLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Engine"), engineSinks.begin(), engineSinks.end());
+    s_clientLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Client"), clientSinks.begin(), clientSinks.end());
 
     s_engineLogger->set_level(spdlog::level::debug);
     s_clientLogger->set_level(spdlog::level::debug);
@@ -78,13 +77,13 @@ void Log::Deinitialize()
 
 std::shared_ptr<spdlog::logger> Log::GetEngineLogger()
 {
-    BOOST_ASSERT_MSG(s_engineLogger, "Logger not initialized! Did you call Si::Initialize()?");
+    BOOST_ASSERT_MSG(s_engineLogger, Si::GetLocalized("Logger not initialized! Remember to call Si::Initialize()").c_str());
     return s_engineLogger;
 }
 
 std::shared_ptr<spdlog::logger> Log::GetClientLogger()
 {
-    BOOST_ASSERT_MSG(s_clientLogger, "Logger not initialized! Did you call Si::Initialize()?");
+    BOOST_ASSERT_MSG(s_clientLogger, Si::GetLocalized("Logger not initialized! Remember to call Si::Initialize()").c_str());
     return s_clientLogger;
 }
 
