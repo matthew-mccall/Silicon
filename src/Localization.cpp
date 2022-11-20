@@ -53,7 +53,8 @@ void SetLocale(Locale locale)
 {
     for (const auto &filePath : s_localizationFiles[locale]) {
         tinyxml2::XMLDocument doc;
-        doc.LoadFile(filePath.c_str());
+
+        doc.LoadFile(static_cast<const char *>(filePath.c_str()));
 
         BOOST_ASSERT_MSG(!doc.Error(), doc.ErrorStr());
 
