@@ -16,10 +16,10 @@ elseif(SI_PLATFORM STREQUAL "Web")
         message(FATAL_ERROR "Emscripten toolchain file not found!")
     endif()
 
-    add_compile_options("-pthread")
-    add_link_options("-pthread")
-
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+    set(Threads_FOUND TRUE)
+    set(CMAKE_USE_PTHREADS_INIT TRUE)
+    set(CMAKE_THREAD_LIBS_INIT "-pthread")
 else()
     message(FATAL_ERROR "Invalid platform specified at SI_PLATFORM! Must either be \"Desktop\" or \"Web\".")
 endif()
