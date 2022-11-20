@@ -28,31 +28,78 @@
 // Created by Matthew McCall on 11/20/22.
 //
 
+#include <filesystem>
 #include <unordered_map>
+#include <vector>
+
+#include "spdlog/fmt/fmt.h"
+
+#include "boost/assert.hpp"
+
+#include "tinyxml2.h"
 
 #include "Silicon/Localization.hpp"
 
 namespace {
 
-    std::unordered_map<std::string, std::string> s_localeTable;
+std::unordered_map<Si::Locale, std::vector<std::filesystem::path>> s_localizationFiles;
+std::unordered_map<std::string, std::string> s_localeTable;
 
 }
 
-namespace Si
-{
+namespace Si {
 
 void SetLocale(Locale locale)
 {
+    for (const auto &filePath : s_localizationFiles[locale]) {
+        tinyxml2::XMLDocument doc;
+        doc.LoadFile(filePath.c_str());
+
+        BOOST_ASSERT_MSG(!doc.Error(), doc.ErrorStr());
+
+        tinyxml2::XMLElement *plist = doc.FirstChildElement("plist");
+        BOOST_ASSERT_MSG(plist, "plist not found in localization file!");
+
+        tinyxml2::XMLElement *rootDict = plist->FirstChildElement("dict");
+        BOOST_ASSERT_MSG(rootDict, "Dictionary not found in localization file!");
+
+        tinyxml2::XMLElement *keyElement = rootDict->FirstChildElement("key");
+
+        while (keyElement) {
+            tinyxml2::XMLText *keyTextNode = keyElement->FirstChild()->ToText();
+            tinyxml2::XMLElement *stringElement = keyElement->NextSiblingElement("string");
+
+            BOOST_ASSERT_MSG(stringElement, fmt::format("String for key '{}' not found in localization file!", keyTextNode->Value()).c_str());
+
+            tinyxml2::XMLText *stringTextNode = stringElement->FirstChild()->ToText();
+
+            s_localeTable[keyTextNode->Value()] = stringTextNode->Value();
+
+            keyElement = stringElement->NextSiblingElement("key");
+        }
+    }
 }
 
 std::string GetLocalized(const std::string &key)
 {
-    if (s_localeTable.find(key) == s_localeTable.end())
-    {
+    if (s_localeTable.find(key) == s_localeTable.end()) {
         return key;
     }
 
     return s_localeTable.at(key);
+}
+
+bool AddLocalizationFile(Locale locale, const std::string &filename)
+{
+    std::filesystem::path filePath {filename};
+
+    if (!std::filesystem::exists(filePath)) {
+        return false;
+    }
+
+    s_localizationFiles[locale].push_back(filePath);
+
+    return true;
 }
 
 }

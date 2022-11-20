@@ -40,6 +40,7 @@ enum class Locale {
 };
 
 void SetLocale(Locale locale);
+bool AddLocalizationFile(Locale locale, const std::string &filename);
 std::string GetLocalized(const std::string &key);
 
 }

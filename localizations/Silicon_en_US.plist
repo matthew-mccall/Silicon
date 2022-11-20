@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Initializing Modules!</key>
+	<string>Initializing Modules!</string>
+	<key>Initialized Modules!</key>
+	<string>Initialized Modules!</string>
+	<key>Deinitializing Modules!</key>
+	<string>Deinitializing Modules!</string>
+	<key>Loop function not defined! Make sure you set one with Si::SetLoop()</key>
+	<string>Loop function not defined! Make sure you set one with Si::SetLoop()</string>
+	<key>Engine</key>
+	<string>Engine</string>
+	<key>Client</key>
+	<string>Client</string>
+	<key>Logger not initialized! Remember to call Si::Initialize()</key>
+	<string>Logger not initialized! Remember to call Si::Initialize()</string>
+</dict>
+</plist>

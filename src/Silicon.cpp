@@ -44,6 +44,13 @@ namespace Si {
 
 bool Initialize()
 {
+    if (!Si::AddLocalizationFile(Locale::en_US, "localizations/Silicon_en_US.plist"))
+    {
+        return false;
+    }
+
+    Si::SetLocale(Locale::en_US);
+
     Log::Initialize();
     Engine::Debug(Si::GetLocalized("Initializing Modules!"));
     InitializeModules();

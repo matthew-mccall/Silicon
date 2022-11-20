@@ -27,6 +27,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 add_subdirectory(libs/spdlog)
 add_subdirectory(libs/GSL)
+add_subdirectory(libs/tinyxml2)
 
 include(Desktop/ResolveDependencies)
 include(Web/ResolveDependencies)
@@ -39,7 +40,8 @@ add_subdirectory(include/)
 set(SI_DEPENDENCIES
         SiliconHeaders
         Microsoft.GSL::GSL
-        spdlog::spdlog)
+        spdlog::spdlog
+        tinyxml2::tinyxml2)
 
 include(Desktop/AmendDependenciesList)
 include(Web/AmendDependenciesList)
@@ -52,6 +54,7 @@ include(AddModule)
 AddModule(Desktop)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
+file(COPY localizations DESTINATION .)
 
 set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp src/Localization.cpp include/Silicon/Localization.hpp)
 
