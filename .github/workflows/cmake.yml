@@ -34,6 +34,7 @@ jobs:
         # An explicit key for restoring and saving the cache
         key: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ matrix.platform }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
         restore-keys: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ matrix.platform }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
+      if: ${{ matrix.platform == 'Desktop' }}
 
     - name: Update Submodules
       run: git submodule update --init --recursive
