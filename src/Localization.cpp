@@ -42,7 +42,7 @@
 
 namespace {
 
-std::unordered_map<Si::Locale, std::vector<std::filesystem::path>> s_localizationFiles;
+std::unordered_map<Si::Locale, std::vector<std::string>> s_localizationFiles;
 std::unordered_map<std::string, std::string> s_localeTable;
 
 }
@@ -54,7 +54,7 @@ void SetLocale(Locale locale)
     for (const auto &filePath : s_localizationFiles[locale]) {
         tinyxml2::XMLDocument doc;
 
-        doc.LoadFile(static_cast<const char *>(filePath.c_str()));
+        doc.LoadFile(filePath.c_str());
 
         BOOST_ASSERT_MSG(!doc.Error(), doc.ErrorStr());
 
@@ -98,7 +98,7 @@ bool AddLocalizationFile(Locale locale, const std::string &filename)
         return false;
     }
 
-    s_localizationFiles[locale].push_back(filePath);
+    s_localizationFiles[locale].push_back(filename);
 
     return true;
 }
