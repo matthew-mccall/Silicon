@@ -16,6 +16,9 @@ jobs:
         os: [ ubuntu-latest, windows-latest ]
         BUILD_TYPE: [ Release, Debug ]
         platform: [ Desktop, Web ] 
+        exclude:
+          - platfrom: Web
+            os: windows-latest
     runs-on: ${{ matrix.os }}
 
     steps:
