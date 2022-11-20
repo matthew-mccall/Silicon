@@ -32,8 +32,8 @@ jobs:
           ${{github.workspace}}/lib
           ${{github.workspace}}/build
         # An explicit key for restoring and saving the cache
-        key: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
-        restore-keys: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
+        key: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ matrix.platform }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
+        restore-keys: ${{ runner.os }}-${{ matrix.BUILD_TYPE }}-${{ matrix.platform }}-${{ hashFiles('.gitmodules', 'CMakeLists.txt', 'cmake/**') }}
 
     - name: Update Submodules
       run: git submodule update --init --recursive
