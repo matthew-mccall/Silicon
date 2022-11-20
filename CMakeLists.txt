@@ -18,6 +18,8 @@ elseif(SI_PLATFORM STREQUAL "Web")
 
     add_compile_options("-pthread")
     add_link_options("-pthread")
+
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 else()
     message(FATAL_ERROR "Invalid platform specified at SI_PLATFORM! Must either be \"Desktop\" or \"Web\".")
 endif()
