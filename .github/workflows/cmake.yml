@@ -47,6 +47,8 @@ jobs:
   # You may pin to the exact commit or the version.
   # uses: mymindstorm/setup-emsdk@29ba4851d6da084ffdc1e0fc390efadbd75df9d1
       uses: mymindstorm/setup-emsdk@v11
+      with:
+        version: 3.1.17
       if: ${{ matrix.platform == 'Web' }}
 
     - name: Configure CMake
