@@ -1,6 +1,6 @@
 project(SiliconHeaders)
 
-set(SRCS Silicon/Silicon.hpp Silicon/Log.hpp Silicon/Allocator.hpp Silicon/Types.hpp Silicon/Event.hpp Silicon/Node.hpp)
+set(SRCS Silicon/Silicon.hpp Silicon/Log.hpp Silicon/Allocator.hpp Silicon/Types.hpp Silicon/Event.hpp Silicon/Node.hpp Silicon/Renderer.hpp)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SRC})
 

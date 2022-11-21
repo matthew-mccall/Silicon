@@ -53,6 +53,9 @@ include(AddModule)
 
 AddModule(Desktop)
 
+include(Desktop/ResolveModules)
+include(Web/ResolveModules)
+
 configure_file(src/Modules.cpp.in Modules.cpp)
 file(COPY localizations DESTINATION .)
 
