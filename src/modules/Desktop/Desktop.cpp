@@ -24,36 +24,23 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Event.hpp"
-#include "Silicon/Silicon.hpp"
+//
+// Created by Matthew McCall on 11/19/22.
+//
 
-#include "Silicon/Desktop/Event.hpp"
-#include "Silicon/Desktop/Window.hpp"
+#include "SDL.h"
 
-namespace {
-bool loop = true;
+#include "Desktop/Desktop.hpp"
+
+namespace Si::Desktop {
+void Initialize()
+{
+    SDL_Init(SDL_INIT_VIDEO);
 }
 
-bool Run()
+void Deinitialize()
 {
-    Si::Desktop::ProcessEvents();
-    return loop;
+    SDL_Quit();
 }
 
-int main(int argc, char **argv)
-{
-    Si::Initialize();
-
-    Si::Sub<Si::Event::AppQuit> sub([](const Si::Event::AppQuit &e) {
-        loop = false;
-    });
-
-    Si::SetLoop(Run);
-
-    {
-        Si::Window window;
-        Si::Run();
-    }
-
-    Si::Deinitialize();
 }

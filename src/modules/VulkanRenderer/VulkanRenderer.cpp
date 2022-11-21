@@ -28,7 +28,7 @@
 // Created by Matthew McCall on 11/20/22.
 //
 
-#include "VulkanRenderer.hpp"
+#include "VulkanRenderer/VulkanRenderer.hpp"
 
 namespace Si {
 

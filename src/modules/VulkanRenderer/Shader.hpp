@@ -25,23 +25,22 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 11/19/22.
+// Created by Matthew McCall on 11/21/22.
 //
 
-#include "SDL.h"
+#ifndef SILICON_VULKANRENDERER_SHADER_HPP
+#define SILICON_VULKANRENDERER_SHADER_HPP
 
-#include "Desktop.hpp"
+#include "Silicon/Shader.hpp"
 
-namespace Si::Desktop
+namespace Si::Vulkan {
+
+class Shader : public Si::Shader
 {
-void Initialize()
-{
-    SDL_Init(SDL_INIT_VIDEO);
-}
+public:
+    explicit Shader(const std::string &string, Type type);
+};
 
-void Deinitialize()
-{
-    SDL_Quit();
-}
+} // Si::Vulkan
 
-}
+#endif // SILICON_VULKANRENDERER_SHADER_HPP

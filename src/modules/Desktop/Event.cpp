@@ -24,36 +24,28 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+//
+// Created by Matthew McCall on 11/19/22.
+//
+
+#include "SDL.h"
+
 #include "Silicon/Event.hpp"
-#include "Silicon/Silicon.hpp"
 
-#include "Silicon/Desktop/Event.hpp"
-#include "Silicon/Desktop/Window.hpp"
+#include "Desktop/Event.hpp"
 
-namespace {
-bool loop = true;
-}
+namespace Si::Desktop {
 
-bool Run()
+void ProcessEvents()
 {
-    Si::Desktop::ProcessEvents();
-    return loop;
-}
-
-int main(int argc, char **argv)
-{
-    Si::Initialize();
-
-    Si::Sub<Si::Event::AppQuit> sub([](const Si::Event::AppQuit &e) {
-        loop = false;
-    });
-
-    Si::SetLoop(Run);
-
-    {
-        Si::Window window;
-        Si::Run();
+    SDL_Event e;
+    while (SDL_PollEvent(&e)) {
+        switch (e.type) {
+        case SDL_QUIT:
+            Si::Pub(Event::AppQuit());
+            break;
+        }
     }
+}
 
-    Si::Deinitialize();
 }

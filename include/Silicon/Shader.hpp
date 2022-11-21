@@ -25,28 +25,45 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 11/19/22.
+// Created by Matthew McCall on 11/21/22.
 //
 
-#include "SDL.h"
+#ifndef SILICON_SHADER_HPP
+#define SILICON_SHADER_HPP
 
-#include "Silicon/Event.hpp"
+#include <string>
 
-#include "Event.hpp"
-
-namespace Si::Desktop
+namespace Si {
+class Shader
 {
+public:
+    /**
+     * Represents different types of shaders
+     */
+    enum class Type {
+        Vertex,
+        TessellationControl, // Future support planned.
+        TessellationEvaluation, // Future support planned.
+        Geometry, // Future support planned.
+        Fragment,
+        Compute, // Future support planned.
+        RTRayGen, // Future support planned.
+        RTAnyHit, // Future support planned.
+        RTClosestHit, // Future support planned.
+        RTMiss, // Future support planned.
+        RTIntersection, // Future support planned.
+        RTCallable // Future support planned.
+    };
 
-void ProcessEvents()
-{
-    SDL_Event e;
-    while (SDL_PollEvent(&e)) {
-        switch (e.type) {
-        case SDL_QUIT:
-            Si::Pub(Event::AppQuit());
-            break;
-        }
+    explicit Shader(const std::string &, Type type)
+        : m_type(type)
+    {
     }
+    virtual ~Shader() = default;
+
+protected:
+    Type m_type;
+};
 }
 
-}
+#endif // SILICON_SHADER_HPP

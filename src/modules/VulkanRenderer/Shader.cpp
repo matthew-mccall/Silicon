@@ -24,36 +24,53 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Silicon/Event.hpp"
-#include "Silicon/Silicon.hpp"
+//
+// Created by Matthew McCall on 11/21/22.
+//
 
-#include "Silicon/Desktop/Event.hpp"
-#include "Silicon/Desktop/Window.hpp"
+#include "shaderc/shaderc.hpp"
+#include "vulkan/vulkan.hpp"
 
-namespace {
-bool loop = true;
-}
+#include "Silicon/Log.hpp"
+#include "Silicon/Types.hpp"
 
-bool Run()
+#include "Shader.hpp"
+
+namespace Si::Vulkan {
+
+Shader::Shader(const std::string &string, Type type)
+    : Si::Shader(string, type)
 {
-    Si::Desktop::ProcessEvents();
-    return loop;
-}
+    shaderc::Compiler compiler;
+    shaderc::CompilationResult<std::uint32_t> result;
 
-int main(int argc, char **argv)
-{
-    Si::Initialize();
+    shaderc_shader_kind kind;
 
-    Si::Sub<Si::Event::AppQuit> sub([](const Si::Event::AppQuit &e) {
-        loop = false;
-    });
+    switch (m_type) {
+    case Type::Vertex:
+        kind = shaderc_shader_kind::shaderc_glsl_vertex_shader;
+        break;
 
-    Si::SetLoop(Run);
+    case Type::Fragment:
+        kind = shaderc_shader_kind::shaderc_glsl_fragment_shader;
+        break;
 
-    {
-        Si::Window window;
-        Si::Run();
+    default:
+        kind = shaderc_shader_kind::shaderc_glsl_infer_from_source;
+        break;
     }
 
-    Si::Deinitialize();
+    result = compiler.CompileGlslToSpv(string, kind, "");
+
+    if (result.GetCompilationStatus() == shaderc_compilation_status_success) {
+        Vector<std::uint32_t> spirv { result.begin(), result.end() };
+        vk::ShaderModuleCreateInfo createInfo = { {}, spirv };
+//        m_handle = m_device.get()->createShaderModule(createInfo);
+        Si::Engine::Debug("Compiled shader!");
+//        return true;
+    }
+
+    Si::Engine::Error(result.GetErrorMessage());
 }
+
+} // Si::Vulkan
