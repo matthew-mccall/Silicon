@@ -72,7 +72,7 @@ add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
-target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "libs/taskflow")
 
 include(Desktop/BuildOptions)
 include(Web/BuildOptions)
