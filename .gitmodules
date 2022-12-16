@@ -22,3 +22,6 @@
 [submodule "libs/taskflow"]
 	path = libs/taskflow
 	url = https://github.com/taskflow/taskflow.git
+[submodule "libs/glm"]
+	path = libs/glm
+	url = https://github.com/g-truc/glm.git
