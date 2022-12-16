@@ -31,19 +31,19 @@
 #ifndef SILICON_NODE_HPP
 #define SILICON_NODE_HPP
 
+#include <initializer_list>
+
 #include "Types.hpp"
 
-namespace Si
-{
+namespace Si {
 
 class Node;
 
-using NodeGraph = Graph<NotNull<Node*>, GraphList>;
+using NodeGraph = Graph<NotNull<Node *>, GraphList>;
 
 class Node
 {
 public:
-
 
     class ChildIterator
     {
@@ -58,19 +58,24 @@ public:
         const ChildIterator operator++(int);
         const ChildIterator operator--(int);
 
-        bool operator==(const ChildIterator& other);
-        bool operator!=(const ChildIterator& other);
+        bool operator==(const ChildIterator &other);
+        bool operator!=(const ChildIterator &other);
 
     private:
         NodeGraph::adjacency_iterator m_itr;
     };
 
     Node();
-    Node(const Node&) = delete;
-    Node(Node&&) = delete;
+    Node(const Node &) = delete;
+    Node(Node &&) = delete;
 
-    void addChild(NotNull<Node*>);
-    void addChild(Node&);
+    // Create Node from initializer list of children
+    Node(std::initializer_list<Node *> children);
+
+    void addChild(NotNull<Node *>);
+    void addChild(Node &);
+
+    Node &addChildren(std::initializer_list<Node *> children);
 
     [[nodiscard]] ChildIterator begin() const;
     [[nodiscard]] ChildIterator end() const;

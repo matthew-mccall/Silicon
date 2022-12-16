@@ -66,10 +66,10 @@ int main(int argc, char **argv)
         MessageNode nodeB {"Node B"};
         MessageNode nodeC {"Node C"};
 
-        root.addChild(nodeA);
-        root.addChild(nodeB);
-
-        nodeA.addChild(nodeC);
+        root.addChildren({&nodeA,
+            &nodeB.addChildren({
+                &nodeC,
+            })});
 
         root.printMessage();
     }
