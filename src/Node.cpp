@@ -51,7 +51,6 @@ Node::Node(std::initializer_list<Node *> children)
 void Node::addChild(NotNull<Node *> node)
 {
     boost::add_edge(m_graphDescriptor, node->m_graphDescriptor, s_graph);
-    node->m_parent = this;
 }
 
 void Node::addChild(Node &node)
@@ -61,11 +60,6 @@ void Node::addChild(Node &node)
 
 Node::~Node()
 {
-    for (Node& i : *this)
-    {
-        i.m_parent = nullptr;
-    }
-
     boost::clear_vertex(m_graphDescriptor, s_graph);
     boost::remove_vertex(m_graphDescriptor, s_graph);
 }

@@ -41,6 +41,9 @@ class Node;
 
 using NodeGraph = Graph<NotNull<Node *>, GraphList>;
 
+/*
+ * A Node is a base class for all objects that can be added to a NodeGraph.
+ */
 class Node
 {
 public:
@@ -65,28 +68,59 @@ public:
         NodeGraph::adjacency_iterator m_itr;
     };
 
+    /**
+     * @brief Construct a new Node object
+     */
     Node();
     Node(const Node &) = delete;
     Node(Node &&) = delete;
 
-    // Create Node from initializer list of children
+    /**
+     * @brief Create a new Node object from a list of children
+     */
     Node(std::initializer_list<Node *> children);
 
+    /**
+     * Add a child to this node
+     *
+     * @param node The child to add
+     */
     void addChild(NotNull<Node *>);
+
+    /**
+     * Add a child to this node
+     *
+     * @param node The child to add
+     */
     void addChild(Node &);
 
+    /**
+     * Add a list of children to this node
+     *
+     * @param children The children to add
+     */
     Node &addChildren(std::initializer_list<Node *> children);
 
+    /**
+     * Gets the begin iterator for the children of this node
+     * @return The begin iterator
+     */
     [[nodiscard]] ChildIterator begin() const;
+
+    /**
+     * Gets the end iterator for the children of this node
+     * @return The end iterator
+     */
     [[nodiscard]] ChildIterator end() const;
 
+    /**
+     * Destroys this node.
+     */
     virtual ~Node();
 
 protected:
     unsigned m_id = 0;
     NodeGraph::vertex_descriptor m_graphDescriptor;
-
-    Node* m_parent = nullptr;
 
     static unsigned s_currentID;
     static NodeGraph s_graph;
