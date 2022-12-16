@@ -25,36 +25,23 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 11/21/22.
+// Created by Matthew McCall on 12/14/22.
 //
 
-#ifndef SILICON_RENDERER_HPP
-#define SILICON_RENDERER_HPP
+#include "Silicon/Renderer.hpp"
 
-#include <memory>
+namespace {
 
-#include "Types.hpp"
-
-namespace Si {
-
-/**
- * @brief The Renderer class is the base class for all renderers. It is responsible for rendering the scene. It defines the
- * interface for all renderers. It provides a way for implementations to be registered and selected at runtime.
- */
-class Renderer
-{
-public:
-
-    /**
-     * @brief Registers a renderer implementation with the renderer.
-     *
-     * @param renderer The renderer implementation to register.
-     */
-    static void RegisterRenderer(const std::string &name, std::unique_ptr<Renderer> renderer);
-
-    virtual ~Renderer() = default;
-};
+// A map of all registered renderers.
+Si::HashMap<std::string, std::unique_ptr<Si::Renderer>> registered_renderers;
 
 }
 
-#endif // SILICON_RENDERER_HPP
+namespace Si {
+
+void Renderer::RegisterRenderer(const std::string &name, std::unique_ptr<Renderer> renderer)
+{
+    registered_renderers[name] = std::move(renderer);
+}
+
+}

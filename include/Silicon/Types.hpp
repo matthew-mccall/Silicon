@@ -51,11 +51,20 @@ using NotNull = gsl::strict_not_null<T>;
 template <typename T>
 using Vector = std::vector<T, Allocator<T>>;
 
-/**
- * STL compliant data structure for storing an arbitrary amount of data.
- */
 template <typename T>
 using List = std::list<T, Allocator<T>>;
+
+/**
+ * A STL map with a Silicon allocator.
+ */
+template <typename Key, typename Value, typename Compare = std::less<Key>>
+using Map = std::map<Key, Value, Compare, Allocator<std::pair<const Key, Value>>>;
+
+/**
+ * A STL unordered map with a Silicon allocator.
+ */
+template <typename Key, typename Value, typename Hash = std::hash<Key>, typename KeyEqual = std::equal_to<Key>>
+using HashMap = std::unordered_map<Key, Value, Hash, KeyEqual, Allocator<std::pair<const Key, Value>>>;
 
 /**
  * Vector for use in Graphs.

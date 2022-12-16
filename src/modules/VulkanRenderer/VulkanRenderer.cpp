@@ -34,6 +34,7 @@ namespace Si {
 
 void VulkanRenderer::Initialize()
 {
+    Renderer::RegisterRenderer("Vulkan", std::make_unique<VulkanRenderer>());
 }
 void VulkanRenderer::Deinitialize()
 {

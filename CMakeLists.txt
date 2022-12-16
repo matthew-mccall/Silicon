@@ -59,7 +59,7 @@ include(Web/ResolveModules)
 configure_file(src/Modules.cpp.in Modules.cpp)
 file(COPY localizations DESTINATION .)
 
-set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp src/Localization.cpp include/Silicon/Localization.hpp)
+set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp src/Localization.cpp include/Silicon/Localization.hpp src/Renderer.cpp)
 
 include(Desktop/AmendSourcesList)
 include(Web/AmendSourcesList)
