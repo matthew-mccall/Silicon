@@ -1,0 +1,15 @@
+#ifndef SI_CONFIG_HPP
+#define SI_CONFIG_HPP
+
+namespace Si {
+
+enum class BuildConfig {
+    Debug,
+    Release
+};
+
+constexpr BuildConfig SI_BUILD_CONFIG = BuildConfig::${CMAKE_BUILD_TYPE};
+
+} // namespace Si
+
+#endif // SI_CONFIG_HPP

@@ -25,32 +25,32 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 11/19/22.
+// Created by Matthew McCall on 12/16/22.
 //
 
-#ifndef SILICON_WINDOW_HPP
-#define SILICON_WINDOW_HPP
+#ifndef SILICON_VERTEX_HPP
+#define SILICON_VERTEX_HPP
 
-#include <cstdint>
-#include <string>
+#include <array>
 
-#include "SDL_video.h"
+#include <glm/glm.hpp>
 
 namespace Si {
 
-class Window
-{
-public:
-    explicit Window(const std::string &name = "Silicon Engine", std::uint32_t width = 800, std::uint32_t height = 600);
+using Vec2 = glm::vec2;
+using Vec3 = glm::vec3;
 
-    [[nodiscard]] SDL_Window *GetSDLWindow() const;
+struct Vertex {
+    Vec2 position;
+    Vec3 color;
 
-    ~Window();
+    template <typename T>
+    T static getBindingDescription();
 
-private:
-    std::uint32_t m_id {};
+    template <typename T>
+    std::array<T, 2> static getAttributeDescriptions();
 };
 
-} // Desktop
+}
 
-#endif // SILICON_WINDOW_HPP
+#endif // SILICON_VERTEX_HPP

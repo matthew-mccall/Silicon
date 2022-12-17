@@ -25,8 +25,9 @@ message(STATUS "Building Silicon Engine ${PROJECT_VERSION} for ${SI_PLATFORM}")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-add_subdirectory(libs/spdlog)
+add_subdirectory(libs/glm)
 add_subdirectory(libs/GSL)
+add_subdirectory(libs/spdlog)
 add_subdirectory(libs/tinyxml2)
 
 include(Desktop/ResolveDependencies)
@@ -41,7 +42,8 @@ set(SI_DEPENDENCIES
         SiliconHeaders
         Microsoft.GSL::GSL
         spdlog::spdlog
-        tinyxml2::tinyxml2)
+        tinyxml2::tinyxml2
+        glm::glm)
 
 include(Desktop/AmendDependenciesList)
 include(Web/AmendDependenciesList)

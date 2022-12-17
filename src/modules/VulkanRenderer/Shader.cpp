@@ -38,8 +38,15 @@
 
 namespace Si::Vulkan {
 
-Shader::Shader(const std::string &string, Type type)
+Shader::Shader(Device &device, const std::string &string, Type type)
     : Si::Shader(string, type)
+    , m_device(&device)
+    , m_string(string)
+{
+    addDependency(*m_device);
+}
+
+bool Shader::createImpl()
 {
     shaderc::Compiler compiler;
     shaderc::CompilationResult<std::uint32_t> result;
@@ -60,17 +67,23 @@ Shader::Shader(const std::string &string, Type type)
         break;
     }
 
-    result = compiler.CompileGlslToSpv(string, kind, "");
+    result = compiler.CompileGlslToSpv(m_string, kind, "");
 
     if (result.GetCompilationStatus() == shaderc_compilation_status_success) {
-        Vector<std::uint32_t> spirv { result.begin(), result.end() };
-        vk::ShaderModuleCreateInfo createInfo = { {}, spirv };
-//        m_handle = m_device.get()->createShaderModule(createInfo);
+        Vector<std::uint32_t> spirv {result.begin(), result.end()};
+        vk::ShaderModuleCreateInfo createInfo = {{}, spirv};
+        m_handle = (*m_device)->createShaderModule(createInfo);
         Si::Engine::Debug("Compiled shader!");
-//        return true;
+        return true;
     }
 
     Si::Engine::Error(result.GetErrorMessage());
+    return false;
+}
+
+void Shader::destroyImpl()
+{
+    (*m_device)->destroyShaderModule(m_handle);
 }
 
 } // Si::Vulkan

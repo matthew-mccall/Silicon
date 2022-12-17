@@ -33,7 +33,7 @@
 
 #include <memory>
 
-#include "Types.hpp"
+#include "Silicon/Types.hpp"
 
 namespace Si {
 

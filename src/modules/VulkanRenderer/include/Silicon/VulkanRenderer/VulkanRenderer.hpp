@@ -31,7 +31,7 @@
 #ifndef SILICON_VULKANRENDERER_HPP
 #define SILICON_VULKANRENDERER_HPP
 
-#include "Silicon/Renderer.hpp"
+#include "Silicon/Renderer/Renderer.hpp"
 
 namespace Si {
 

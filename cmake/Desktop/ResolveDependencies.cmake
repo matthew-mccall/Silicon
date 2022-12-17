@@ -19,9 +19,12 @@ if (SI_PLATFORM STREQUAL "Desktop")
     set(Boost_NO_SYSTEM_PATHS ON)
     find_package(Boost REQUIRED)
 
-    if(Boost_FOUND)
+    if (Boost_FOUND)
         include_directories(${Boost_INCLUDE_DIRS})
-    endif()
+    endif ()
+
+    find_package(Vulkan REQUIRED COMPONENTS shaderc_combined)
 
     add_subdirectory(libs/SDL)
+    add_subdirectory(libs/VulkanMemoryAllocator)
 endif()

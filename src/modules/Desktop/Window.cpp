@@ -45,4 +45,9 @@ Window::~Window()
     SDL_DestroyWindow(SDL_GetWindowFromID(m_id));
 }
 
+SDL_Window *Window::GetSDLWindow() const
+{
+    return SDL_GetWindowFromID(m_id);
+}
+
 } // Desktop

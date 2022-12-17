@@ -28,7 +28,7 @@
 // Created by Matthew McCall on 12/14/22.
 //
 
-#include "Silicon/Renderer.hpp"
+#include "Silicon/Renderer/Renderer.hpp"
 
 namespace {
 

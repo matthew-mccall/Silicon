@@ -33,12 +33,22 @@
 
 #include "Silicon/Shader.hpp"
 
+#include "Device.hpp"
+
 namespace Si::Vulkan {
 
-class Shader : public Si::Shader
+class Shader : public Si::Shader, public Handle<vk::ShaderModule>
 {
 public:
-    explicit Shader(const std::string &string, Type type);
+    explicit Shader(Device &device, const std::string &string, Type type);
+
+protected:
+    bool createImpl() override;
+    void destroyImpl() override;
+
+private:
+    NotNull<Device *> m_device; // NotNull because we need to be able to move it
+    std::string m_string;
 };
 
 } // Si::Vulkan
