@@ -42,7 +42,7 @@ void ProcessEvents()
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT:
-            Si::Pub(Event::AppQuit());
+            Si::Pub(Si::Event::AppQuit());
             break;
         }
     }
