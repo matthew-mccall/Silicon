@@ -32,27 +32,38 @@
 #define SILICON_RENDERER_HPP
 
 #include <memory>
+#include <functional>
 
 #include "Silicon/Types.hpp"
+#include "Vertex.hpp"
 
 namespace Si {
 
 /**
- * @brief The Renderer class is the base class for all renderers. It is responsible for rendering the scene. It defines the
- * interface for all renderers. It provides a way for implementations to be registered and selected at runtime.
+ * The Renderer class is the base class for all Renderer implementations. It provides a common interface for all Renderer implementations.
  */
 class Renderer
 {
 public:
 
     /**
-     * @brief Registers a renderer implementation with the renderer.
+     * @brief Registers a renderer implementation with the renderer. This will be called by the modules that provide a renderer implementation.
      *
      * @param renderer The renderer implementation to register.
      */
     static void RegisterRenderer(const std::string &name, std::unique_ptr<Renderer> renderer);
 
+    virtual bool Draw() = 0;
+
     virtual ~Renderer() = default;
+
+protected:
+
+    virtual void OnResize() = 0;
+
+    Si::Vector<Si::Vertex> m_vertices;
+
+
 };
 
 }

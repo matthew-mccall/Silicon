@@ -31,17 +31,15 @@
 #ifndef SILICON_VULKANRENDERER_HPP
 #define SILICON_VULKANRENDERER_HPP
 
+#include "Silicon/Desktop/Window.hpp"
 #include "Silicon/Renderer/Renderer.hpp"
 
-namespace Si {
+namespace Si::VulkanRenderer {
+    void Initialize();
 
-class VulkanRenderer : public Renderer
-{
-public:
-    static void Initialize();
-    static void Deinitialize();
-};
+    void Create(Window &window);
 
+    void Deinitialize();
 }
 
 #endif // SILICON_VULKANRENDERER_HPP

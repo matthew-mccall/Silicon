@@ -34,6 +34,11 @@
 namespace Si::Desktop
 {
 
+namespace Event
+{
+    struct WindowResize {};
+}
+
 void ProcessEvents();
 
 }
