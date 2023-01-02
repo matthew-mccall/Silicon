@@ -43,7 +43,6 @@ add_library(Silicon::Vulkan ALIAS ${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
                       Silicon::Headers
-                      glm::glm
                       SDL2::SDL2
                       Vulkan::Vulkan
                       VulkanMemoryAllocator)

@@ -22,5 +22,6 @@ add_library(Silicon::Headers ALIAS ${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(${PROJECT_NAME} INTERFACE
+                      glm::glm
                       Microsoft.GSL::GSL
                       spdlog::spdlog)
