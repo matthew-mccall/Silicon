@@ -1,9 +1,10 @@
 if (SI_PLATFORM STREQUAL "Desktop")
 
-    include(src/desktop/desktop.cmake)
+#    include(src/desktop/desktop.cmake)
 
     add_subdirectory(libs/SDL)
-    list(APPEND SI_DEPENDENCIES SDL2::SDL2)
+    add_subdirectory(src/desktop)
+#    list(APPEND SI_DEPENDENCIES SDL2::SDL2)
 
     # ================================ Boost ================================ #
 
@@ -19,9 +20,6 @@ if (SI_PLATFORM STREQUAL "Desktop")
         )
     endif()
 
-#    set(FETCHCONTENT_SOURCE_DIR_BOOST "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost")
-#    add_subdirectory(libs/boost-cmake)
-
     set(BOOST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost")
     set(Boost_NO_SYSTEM_PATHS ON)
     find_package(Boost REQUIRED)
@@ -36,10 +34,10 @@ if (SI_PLATFORM STREQUAL "Desktop")
 
     find_package(Vulkan REQUIRED COMPONENTS shaderc_combined)
 
-    include(src/vulkan/vulkan.cmake)
+    add_subdirectory(src/vulkan)
     add_subdirectory(libs/VulkanMemoryAllocator)
 
-    list(APPEND SI_DEPENDENCIES Vulkan::Vulkan)
-    list(APPEND SI_DEPENDENCIES VulkanMemoryAllocator)
-
+    list(APPEND SI_DEPENDENCIES
+         Silicon::Desktop
+         Silicon::Vulkan)
 endif()

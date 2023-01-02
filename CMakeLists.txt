@@ -34,10 +34,7 @@ add_subdirectory(include/)
 
 set(SI_DEPENDENCIES
     SiliconHeaders
-    Microsoft.GSL::GSL
-    spdlog::spdlog
-    tinyxml2::tinyxml2
-    glm::glm)
+    tinyxml2::tinyxml2)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
 file(COPY localizations DESTINATION .)
@@ -50,7 +47,6 @@ list(APPEND SI_SRC
      src/Event.cpp
      src/Node.cpp
      src/Localization.cpp
-     include/Silicon/Localization.hpp
      src/Renderer.cpp
      src/Window.cpp)
 
@@ -63,8 +59,9 @@ add_library(${PROJECT_NAME} ${SI_SRC})
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
-target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_MODULE_INCLUDE_DIRS})
-target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "libs/taskflow")
+target_include_directories(${PROJECT_NAME} PRIVATE
+                           "${CMAKE_CURRENT_SOURCE_DIR}/src"
+                           "libs/taskflow")
 
 include(Desktop/BuildOptions)
 include(Web/BuildOptions)
