@@ -1,6 +1,0 @@
-function(add_module)
-    add_library(${ARGV})
-    target_include_directories(${PROJECT_NAME} PUBLIC include)
-    target_include_directories(${PROJECT_NAME} PRIVATE include/Silicon)
-    target_link_libraries(${PROJECT_NAME} PRIVATE ${SI_DEPENDENCIES} ${${PROJECT_NAME}_DEPENDENCIES})
-endfunction(add_module)

@@ -1,0 +1,1 @@
+list(APPEND SI_SRC src/desktop/Run.cpp)

@@ -35,7 +35,7 @@
 
 #include <vulkan/vulkan.hpp>
 
-#include "Silicon/Desktop/Window.hpp"
+#include "Silicon/Window.hpp"
 
 #include "Device.hpp"
 #include "Handle.hpp"

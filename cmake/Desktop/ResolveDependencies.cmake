@@ -1,17 +1,24 @@
 if (SI_PLATFORM STREQUAL "Desktop")
 
+    include(src/desktop/desktop.cmake)
+
+    add_subdirectory(libs/SDL)
+    list(APPEND SI_DEPENDENCIES SDL2::SDL2)
+
+    # ================================ Boost ================================ #
+
     if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
         execute_process(
-                COMMAND "pwsh" "${CMAKE_CURRENT_SOURCE_DIR}/scripts/setup.ps1"
-                WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost"
+            COMMAND "pwsh" "${CMAKE_CURRENT_SOURCE_DIR}/scripts/setup.ps1"
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost"
         )
     else()
         execute_process(
-                COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/scripts/setup.sh"
-                WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost"
+            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/scripts/setup.sh"
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost"
         )
     endif()
-#
+
 #    set(FETCHCONTENT_SOURCE_DIR_BOOST "${CMAKE_CURRENT_SOURCE_DIR}/libs/boost")
 #    add_subdirectory(libs/boost-cmake)
 
@@ -23,8 +30,16 @@ if (SI_PLATFORM STREQUAL "Desktop")
         include_directories(${Boost_INCLUDE_DIRS})
     endif ()
 
+    list(APPEND SI_DEPENDENCIES Boost::boost)
+
+    # ================================ Vulkan ================================ #
+
     find_package(Vulkan REQUIRED COMPONENTS shaderc_combined)
 
-    add_subdirectory(libs/SDL)
+    include(src/vulkan/vulkan.cmake)
     add_subdirectory(libs/VulkanMemoryAllocator)
+
+    list(APPEND SI_DEPENDENCIES Vulkan::Vulkan)
+    list(APPEND SI_DEPENDENCIES VulkanMemoryAllocator)
+
 endif()

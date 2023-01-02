@@ -25,21 +25,29 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
-// Created by Matthew McCall on 11/20/22.
+// Created by Matthew McCall on 11/19/22.
 //
 
-#ifndef SILICON_VULKANRENDERER_HPP
-#define SILICON_VULKANRENDERER_HPP
+#include "Silicon/Window.hpp"
 
-#include "Silicon/Desktop/Window.hpp"
-#include "Silicon/Renderer/Renderer.hpp"
+#include "SDL_video.h"
 
-namespace Si::VulkanRenderer {
-    void Initialize();
+namespace Si {
 
-    void Create(Window &window);
-
-    void Deinitialize();
+Window::Window(const std::string &name, std::uint32_t width, std::uint32_t height)
+{
+    SDL_Window *window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, static_cast<int>(width), static_cast<int>(height), SDL_WINDOW_ALLOW_HIGHDPI);
+    m_id = SDL_GetWindowID(window);
 }
 
-#endif // SILICON_VULKANRENDERER_HPP
+Window::~Window()
+{
+    SDL_DestroyWindow(SDL_GetWindowFromID(m_id));
+}
+
+SDL_Window *Window::GetSDLWindow() const
+{
+    return SDL_GetWindowFromID(m_id);
+}
+
+} // Desktop

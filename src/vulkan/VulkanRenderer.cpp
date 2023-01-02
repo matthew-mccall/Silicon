@@ -31,12 +31,11 @@
 #include "Silicon/Event.hpp"
 #include "Silicon/Log.hpp"
 #include "Silicon/Types.hpp"
+#include "Silicon/Renderer/Renderer.hpp"
 #include "Silicon/Renderer/Vertex.hpp"
 
-#include "Silicon/Desktop/Event.hpp"
-#include "Silicon/Desktop/Window.hpp"
-
-#include "VulkanRenderer/VulkanRenderer.hpp"
+#include "Silicon/Event.hpp"
+#include "Silicon/Window.hpp"
 
 #include "Buffer.hpp"
 #include "CommandPool.hpp"
@@ -65,7 +64,7 @@ public:
         , m_pipeline(m_renderPass)
         , m_commandPool(m_device)
         , m_vertexBuffer(s_instance, m_device, sizeof(Si::Vertex) * 3)
-        , m_resizeHandler([this](const Si::Desktop::Event::WindowResize &event) {
+        , m_resizeHandler([this](const Si::Event::WindowResize &event) {
             resize = true;
         })
     {
@@ -209,7 +208,7 @@ private:
 
     Si::Vector<vk::CommandBuffer> m_commandBuffers;
 
-    Si::Sub<Si::Desktop::Event::WindowResize> m_resizeHandler;
+    Si::Sub<Si::Event::WindowResize> m_resizeHandler;
 
     std::uint32_t m_frameIndex = 0;
     std::uint32_t m_maxFrames = 0;

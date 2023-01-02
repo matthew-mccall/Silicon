@@ -3,7 +3,7 @@
 if (!(Test-Path -Path "boost/version.hpp")) {
     if (! (Get-ChildItem -Name | Select-String -CaseSensitive -SimpleMatch -Quiet -Pattern "bootstrap") )
     {
-        if (!( Get-Location | Select-String -CaseSensitive -SimpleMatch -Quiet -Pattern "/libs/boost"))
+        if (!( GetInstance-Location | Select-String -CaseSensitive -SimpleMatch -Quiet -Pattern "/libs/boost"))
         {
             Set-Variable -Name "SI_HAS_CD_FOR_BOOST"
             Set-Location -Path "./libs/boost"

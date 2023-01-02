@@ -26,9 +26,7 @@
 
 #include "Silicon/Event.hpp"
 #include "Silicon/Silicon.hpp"
-
-#include "Silicon/Desktop/Event.hpp"
-#include "Silicon/Desktop/Window.hpp"
+#include "Silicon/Window.hpp"
 
 namespace {
 bool loop = true;
@@ -36,7 +34,7 @@ bool loop = true;
 
 bool Run()
 {
-    Si::Desktop::ProcessEvents();
+    Si::Event::Process();
     return loop;
 }
 
@@ -52,6 +50,8 @@ int main(int argc, char **argv)
 
     {
         Si::Window window;
+//        Si::VulkanRenderer::Create(window);
+
         Si::Run();
     }
 

@@ -11,9 +11,6 @@ elseif (SI_PLATFORM STREQUAL "Web")
     endif ()
 
     set(CMAKE_TOOLCHAIN_FILE "$ENV{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake")
-
-    set(SPDLOG_BUILD_SHARED OFF)
-    set(BUILD_SHARED_LIBS OFF)
 else ()
     message(FATAL_ERROR "Invalid platform specified at SI_PLATFORM! Must either be \"Desktop\" or \"Web\".")
 endif ()
@@ -30,50 +27,43 @@ add_subdirectory(libs/GSL)
 add_subdirectory(libs/spdlog)
 add_subdirectory(libs/tinyxml2)
 
-include(Desktop/ResolveDependencies)
-include(Web/ResolveDependencies)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(include/)
 
 set(SI_DEPENDENCIES
-        SiliconHeaders
-        Microsoft.GSL::GSL
-        spdlog::spdlog
-        tinyxml2::tinyxml2
-        glm::glm)
-
-include(Desktop/AmendDependenciesList)
-include(Web/AmendDependenciesList)
-
-include(CTest)
-include(AddSiliconTest)
-
-include(AddModule)
-
-AddModule(Desktop)
-
-include(Desktop/ResolveModules)
-include(Web/ResolveModules)
+    SiliconHeaders
+    Microsoft.GSL::GSL
+    spdlog::spdlog
+    tinyxml2::tinyxml2
+    glm::glm)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
 file(COPY localizations DESTINATION .)
 
-set(SRC ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp src/Silicon.cpp src/Modules.hpp src/Log.cpp src/Event.cpp src/Node.cpp src/Localization.cpp include/Silicon/Localization.hpp src/Renderer.cpp)
+list(APPEND SI_SRC
+     ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp
+     src/Silicon.cpp
+     src/Modules.hpp
+     src/Log.cpp
+     src/Event.cpp
+     src/Node.cpp
+     src/Localization.cpp
+     include/Silicon/Localization.hpp
+     src/Renderer.cpp
+     src/Window.cpp)
 
-include(Desktop/AmendSourcesList)
-include(Web/AmendSourcesList)
+include(Desktop/ResolveDependencies)
+include(Web/ResolveDependencies)
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SI_SRC})
 
-add_library(${PROJECT_NAME} ${SRC})
-
+add_library(${PROJECT_NAME} ${SI_SRC})
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ${ENGINE_MODULES})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_MODULE_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "libs/taskflow")
 
 include(Desktop/BuildOptions)
@@ -84,6 +74,9 @@ add_subdirectory(editor)
 if (SI_PLATFORM STREQUAL "Web")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 endif ()
+
+include(CTest)
+include(AddSiliconTest)
 
 AddSiliconTest(EngineInit)
 AddSiliconTest(PubSub)

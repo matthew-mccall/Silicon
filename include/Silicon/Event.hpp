@@ -47,8 +47,11 @@ namespace Event {
      *
      * This is sent before the Engine begins detaching nodes.
      */
-    struct AppQuit {
-    };
+    struct AppQuit {};
+    
+    struct WindowResize {};
+    
+    void Process();
 
 }
 

@@ -24,8 +24,26 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+//
+// Created by Matthew McCall on 11/19/22.
+//
+
+#include "SDL.h"
+
 #include "Silicon/Event.hpp"
 
 namespace Si::Event {
+
+void Process()
+{
+    SDL_Event e;
+    while (SDL_PollEvent(&e)) {
+        switch (e.type) {
+        case SDL_QUIT:
+            Si::Pub(Si::Event::AppQuit());
+            break;
+        }
+    }
+}
 
 }

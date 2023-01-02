@@ -35,56 +35,68 @@
 #include "Silicon/Localization.hpp"
 #include "Silicon/Log.hpp"
 
-namespace {
-std::shared_ptr<spdlog::logger> s_engineLogger;
-std::shared_ptr<spdlog::logger> s_clientLogger;
+class LoggerManager
+{
+public:
+    [[nodiscard]] static const LoggerManager &GetInstance()
+    {
+        static LoggerManager instance;
+        return instance;
+    }
 
-std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_engineLogHistory;
-std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_clientLogHistory;
-}
+    [[nodiscard]] const std::shared_ptr<spdlog::logger> &getEngineLogger() const
+    {
+        return s_engineLogger;
+    }
+    [[nodiscard]] const std::shared_ptr<spdlog::logger> &getClientLogger() const
+    {
+        return s_clientLogger;
+    }
+
+private:
+    LoggerManager()
+    {
+        s_engineLogHistory = std::make_shared<spdlog::sinks::ringbuffer_sink_mt>(64);
+        s_clientLogHistory = std::make_shared<spdlog::sinks::ringbuffer_sink_mt>(64);
+
+        std::array<spdlog::sink_ptr, 2> engineSinks = {
+            std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
+            s_engineLogHistory};
+
+        std::array<spdlog::sink_ptr, 2> clientSinks = {
+            std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
+            s_clientLogHistory};
+
+        s_engineLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Engine"), engineSinks.begin(), engineSinks.end());
+        s_clientLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Client"), clientSinks.begin(), clientSinks.end());
+
+        s_engineLogger->set_level(spdlog::level::debug);
+        s_clientLogger->set_level(spdlog::level::debug);
+
+        s_engineLogger->set_pattern("%Y-%m-%dT%T [%n] %^%8l%$ %v");
+        s_clientLogger->set_pattern("%Y-%m-%dT%T [%n] %^%8l%$ %v");
+
+        s_engineLogHistory->set_pattern("%v");
+        s_clientLogHistory->set_pattern("%v");
+    }
+
+    std::shared_ptr<spdlog::logger> s_engineLogger;
+    std::shared_ptr<spdlog::logger> s_clientLogger;
+
+    std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_engineLogHistory;
+    std::shared_ptr<spdlog::sinks::ringbuffer_sink_mt> s_clientLogHistory;
+};
 
 namespace Si {
 
-void Log::Initialize()
-{
-    s_engineLogHistory = std::make_shared<spdlog::sinks::ringbuffer_sink_mt>(64);
-    s_clientLogHistory = std::make_shared<spdlog::sinks::ringbuffer_sink_mt>(64);
-
-    std::array<spdlog::sink_ptr, 2> engineSinks = {
-        std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
-        s_engineLogHistory};
-
-    std::array<spdlog::sink_ptr, 2> clientSinks = {
-        std::make_shared<spdlog::sinks::stdout_color_sink_mt>(),
-        s_clientLogHistory};
-
-    s_engineLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Engine"), engineSinks.begin(), engineSinks.end());
-    s_clientLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Client"), clientSinks.begin(), clientSinks.end());
-
-    s_engineLogger->set_level(spdlog::level::debug);
-    s_clientLogger->set_level(spdlog::level::debug);
-
-    s_engineLogger->set_pattern("%Y-%m-%dT%T [%n] %^%8l%$ %v");
-    s_clientLogger->set_pattern("%Y-%m-%dT%T [%n] %^%8l%$ %v");
-
-    s_engineLogHistory->set_pattern("%v");
-    s_clientLogHistory->set_pattern("%v");
-}
-
-void Log::Deinitialize()
-{
-}
-
 std::shared_ptr<spdlog::logger> Log::GetEngineLogger()
 {
-    BOOST_ASSERT_MSG(s_engineLogger, Si::GetLocalized("Logger not initialized! Remember to call Si::Initialize()").c_str());
-    return s_engineLogger;
+    return LoggerManager::GetInstance().getEngineLogger();
 }
 
 std::shared_ptr<spdlog::logger> Log::GetClientLogger()
 {
-    BOOST_ASSERT_MSG(s_clientLogger, Si::GetLocalized("Logger not initialized! Remember to call Si::Initialize()").c_str());
-    return s_clientLogger;
+    return LoggerManager::GetInstance().getClientLogger();
 }
 
 }

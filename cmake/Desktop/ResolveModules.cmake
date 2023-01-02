@@ -1,3 +1,3 @@
 if (SI_PLATFORM STREQUAL "Desktop")
-    AddModule(VulkanRenderer)
+#    AddModule(vulkan)
 endif ()

@@ -33,7 +33,7 @@
 
 #include <vulkan/vulkan.hpp>
 
-#include "Silicon/Desktop/Window.hpp"
+#include "Silicon/Window.hpp"
 #include "Silicon/Types.hpp"
 
 #include "Handle.hpp"

@@ -32,9 +32,6 @@
 namespace Si {
 
 namespace Log {
-    void Initialize();
-
-    void Deinitialize();
 
     std::shared_ptr<spdlog::logger> GetEngineLogger();
 
