@@ -39,24 +39,24 @@ set(SI_DEPENDENCIES
 configure_file(src/Modules.cpp.in Modules.cpp)
 file(COPY localizations DESTINATION .)
 
-list(APPEND SI_SRC
-     ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp
-     src/Silicon.cpp
-     src/Modules.hpp
-     src/Log.cpp
-     src/Event.cpp
-     src/Node.cpp
-     src/Localization.cpp
-     src/Renderer.cpp
-     src/Window.cpp)
-
 include(Desktop/ResolveDependencies)
 include(Web/ResolveDependencies)
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SI_SRC})
+add_library(${PROJECT_NAME}
+            ${CMAKE_CURRENT_BINARY_DIR}/Modules.cpp
+            src/Silicon.cpp
+            src/Modules.hpp
+            src/Log.cpp
+            src/Event.cpp
+            src/Node.cpp
+            src/Localization.cpp
+            src/Renderer.cpp
+            src/Window.cpp)
 
-add_library(${PROJECT_NAME} ${SI_SRC})
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
+
+get_target_property(SOURCES ${PROJECT_NAME} SOURCES)
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
 target_include_directories(${PROJECT_NAME} PRIVATE
