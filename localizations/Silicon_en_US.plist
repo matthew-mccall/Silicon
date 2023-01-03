@@ -2,12 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Initializing Modules!</key>
-	<string>Initializing Modules!</string>
-	<key>Initialized Modules!</key>
-	<string>Initialized Modules!</string>
-	<key>Deinitializing Modules!</key>
-	<string>Deinitializing Modules!</string>
+	<key>Welcome to Silicon Engine!</key>
+	<string>Welcome to Silicon Engine!</string>
+	<key>Shutting down Silicon Engine...</key>
+	<string>Shutting down Silicon Engine...</string>
 	<key>Loop function not defined! Make sure you set one with Si::SetLoop()</key>
 	<string>Loop function not defined! Make sure you set one with Si::SetLoop()</string>
 	<key>Engine</key>

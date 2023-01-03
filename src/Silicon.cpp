@@ -51,18 +51,14 @@ bool Initialize()
 
     Si::SetLocale(Locale::en_US);
 
-    Engine::Debug(Si::GetLocalized("Initializing Modules!"));
-    InitializeModules();
-    Engine::Debug(Si::GetLocalized("Initialized Modules!"));
+    Engine::Debug(Si::GetLocalized("Welcome to Silicon Engine!"));
 
     return true;
 }
 
 void Deinitialize()
 {
-    Engine::Debug(Si::GetLocalized("Deinitializing Modules!"));
-    DeinitializeModules();
-    Engine::Debug(Si::GetLocalized("Deinitialized Modules!"));
+    Engine::Debug(Si::GetLocalized("Shutting down Silicon Engine..."));
 }
 
 void SetLoop(std::function<bool()> loop)

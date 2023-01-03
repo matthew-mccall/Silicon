@@ -39,6 +39,7 @@
 #include "tinyxml2.h"
 
 #include "Silicon/Localization.hpp"
+#include "Silicon/Log.hpp"
 
 namespace {
 
@@ -53,9 +54,7 @@ void SetLocale(Locale locale)
 {
     for (const auto &filePath : s_localizationFiles[locale]) {
         tinyxml2::XMLDocument doc;
-
         doc.LoadFile(filePath.c_str());
-
         BOOST_ASSERT_MSG(!doc.Error(), doc.ErrorStr());
 
         tinyxml2::XMLElement *plist = doc.FirstChildElement("plist");
@@ -69,11 +68,9 @@ void SetLocale(Locale locale)
         while (keyElement) {
             tinyxml2::XMLText *keyTextNode = keyElement->FirstChild()->ToText();
             tinyxml2::XMLElement *stringElement = keyElement->NextSiblingElement("string");
-
             BOOST_ASSERT_MSG(stringElement, fmt::format("String for key '{}' not found in localization file!", keyTextNode->Value()).c_str());
 
             tinyxml2::XMLText *stringTextNode = stringElement->FirstChild()->ToText();
-
             s_localeTable[keyTextNode->Value()] = stringTextNode->Value();
 
             keyElement = stringElement->NextSiblingElement("key");
@@ -84,6 +81,7 @@ void SetLocale(Locale locale)
 std::string GetLocalized(const std::string &key)
 {
     if (s_localeTable.find(key) == s_localeTable.end()) {
+        Engine::Warn("Localization key '{}' not found!", key);
         return key;
     }
 
@@ -95,6 +93,7 @@ bool AddLocalizationFile(Locale locale, const std::string &filename)
     std::filesystem::path filePath {filename};
 
     if (!std::filesystem::exists(filePath)) {
+        Engine::Error("Localization file '{}' does not exist!", filename);
         return false;
     }
 
