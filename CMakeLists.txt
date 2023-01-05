@@ -36,8 +36,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(include/)
 
 set(SI_DEPENDENCIES
-    SiliconHeaders
-    tinyxml2::tinyxml2)
+    SiliconHeaders)
 
 configure_file(src/Modules.cpp.in Modules.cpp)
 file(COPY localizations DESTINATION .)
@@ -62,6 +61,8 @@ get_target_property(SOURCES ${PROJECT_NAME} SOURCES)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE tinyxml2::tinyxml2)
+
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 include(Desktop/BuildOptions)
