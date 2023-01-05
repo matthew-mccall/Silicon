@@ -27,11 +27,10 @@
 #include <array>
 #include <memory>
 
-#include "boost/assert.hpp"
-
 #include "spdlog/sinks/ringbuffer_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
+#include "Silicon/Config.hpp"
 #include "Silicon/Localization.hpp"
 #include "Silicon/Log.hpp"
 
@@ -70,8 +69,11 @@ private:
         s_engineLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Engine"), engineSinks.begin(), engineSinks.end());
         s_clientLogger = std::make_shared<spdlog::logger>(Si::GetLocalized("Client"), clientSinks.begin(), clientSinks.end());
 
-        s_engineLogger->set_level(spdlog::level::debug);
-        s_clientLogger->set_level(spdlog::level::debug);
+        if constexpr (SI_BUILD_CONFIG == Si::BuildConfig::Debug)
+        {
+            s_engineLogger->set_level(spdlog::level::debug);
+            s_clientLogger->set_level(spdlog::level::debug);
+        }
 
         s_engineLogger->set_pattern("%Y-%m-%dT%T [%n] %^%8l%$ %v");
         s_clientLogger->set_pattern("%Y-%m-%dT%T [%n] %^%8l%$ %v");

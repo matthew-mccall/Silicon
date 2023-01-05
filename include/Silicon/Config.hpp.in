@@ -8,8 +8,8 @@ enum class BuildConfig {
     Release
 };
 
-constexpr BuildConfig SI_BUILD_CONFIG = BuildConfig::${CMAKE_BUILD_TYPE};
-
 } // namespace Si
+
+constexpr Si::BuildConfig SI_BUILD_CONFIG = Si::BuildConfig::${CMAKE_BUILD_TYPE};
 
 #endif // SI_CONFIG_HPP

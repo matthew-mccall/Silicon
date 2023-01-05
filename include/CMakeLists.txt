@@ -12,7 +12,7 @@ add_library(${PROJECT_NAME} INTERFACE
             Silicon/Node.hpp
             Silicon/Renderer/Renderer.hpp
             Silicon/Shader.hpp
-            Silicon/Renderer/Vertex.hpp)
+            Silicon/Renderer/Vertex.hpp Silicon/Async.hpp)
 add_library(Silicon::Headers ALIAS ${PROJECT_NAME})
 
 get_target_property(SOURCES ${PROJECT_NAME} SOURCES)
@@ -25,4 +25,5 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
 target_link_libraries(${PROJECT_NAME} INTERFACE
                       glm::glm
                       Microsoft.GSL::GSL
-                      spdlog::spdlog)
+                      spdlog::spdlog
+                      Taskflow)

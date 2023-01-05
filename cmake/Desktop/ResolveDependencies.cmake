@@ -1,10 +1,7 @@
 if (SI_PLATFORM STREQUAL "Desktop")
 
-#    include(src/desktop/desktop.cmake)
-
     add_subdirectory(libs/SDL)
     add_subdirectory(src/desktop)
-#    list(APPEND SI_DEPENDENCIES SDL2::SDL2)
 
     # ================================ Boost ================================ #
 

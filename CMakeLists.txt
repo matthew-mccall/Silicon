@@ -27,6 +27,9 @@ add_subdirectory(libs/GSL)
 add_subdirectory(libs/spdlog)
 add_subdirectory(libs/tinyxml2)
 
+set(TF_BUILD_TESTS OFF)
+add_subdirectory(libs/taskflow)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -51,7 +54,7 @@ add_library(${PROJECT_NAME}
             src/Node.cpp
             src/Localization.cpp
             src/Renderer.cpp
-            src/Window.cpp)
+            src/Window.cpp src/Async.cpp)
 
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
@@ -59,9 +62,7 @@ get_target_property(SOURCES ${PROJECT_NAME} SOURCES)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
-target_include_directories(${PROJECT_NAME} PRIVATE
-                           "${CMAKE_CURRENT_SOURCE_DIR}/src"
-                           "libs/taskflow")
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 include(Desktop/BuildOptions)
 include(Web/BuildOptions)
