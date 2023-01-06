@@ -27,6 +27,10 @@ add_subdirectory(libs/GSL)
 add_subdirectory(libs/spdlog)
 add_subdirectory(libs/tinyxml2)
 
+set(TINYGLTF_HEADER_ONLY ON CACHE INTERNAL "" FORCE)
+set(TINYGLTF_INSTALL OFF CACHE INTERNAL "" FORCE)
+add_subdirectory(libs/tinygltf)
+
 set(TF_BUILD_TESTS OFF)
 add_subdirectory(libs/taskflow)
 
@@ -53,7 +57,7 @@ add_library(${PROJECT_NAME}
             src/Node.cpp
             src/Localization.cpp
             src/Renderer.cpp
-            src/Window.cpp src/Async.cpp)
+            src/Window.cpp src/Async.cpp src/extern/tinygltf.cpp)
 
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
@@ -61,7 +65,9 @@ get_target_property(SOURCES ${PROJECT_NAME} SOURCES)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${SI_DEPENDENCIES})
-target_link_libraries(${PROJECT_NAME} PRIVATE tinyxml2::tinyxml2)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+                      tinyxml2::tinyxml2
+                      tinygltf)
 
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
