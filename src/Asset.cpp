@@ -30,7 +30,7 @@
 
 #include <utility>
 
-#include "SDL_RWops.h"
+#include "SDL_rwops.h"
 
 #include "Silicon/Asset.hpp"
 

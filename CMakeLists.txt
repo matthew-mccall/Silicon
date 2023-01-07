@@ -34,7 +34,7 @@ add_subdirectory(libs/tinygltf)
 set(TF_BUILD_TESTS OFF)
 add_subdirectory(libs/taskflow)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(include/)

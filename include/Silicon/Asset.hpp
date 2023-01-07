@@ -41,15 +41,10 @@
 
 namespace Si {
 
-class Asset;
-
-template <typename T>
-concept AssetType = std::is_base_of<Asset, T>::value;
-
 class Asset
 {
 public:
-    template <AssetType T>
+    template <typename T>
     static std::shared_ptr<T> GetNow(const std::string &asset_path)
     {
         if (auto asset = s_loadedAssets.find(asset_path); asset != s_loadedAssets.end())
@@ -69,7 +64,7 @@ public:
         return asset;
     }
 
-    template <AssetType T>
+    template <typename T>
     static Future<std::shared_ptr<T>> Get(const std::string &asset_path)
     {
         return Async<std::shared_ptr<T>>([asset_path]() {
