@@ -12,7 +12,9 @@ add_library(${PROJECT_NAME} INTERFACE
             Silicon/Node.hpp
             Silicon/Renderer/Renderer.hpp
             Silicon/Shader.hpp
-            Silicon/Renderer/Vertex.hpp Silicon/Async.hpp)
+            Silicon/Renderer/Vertex.hpp
+            Silicon/Async.hpp
+            Silicon/Asset.hpp)
 add_library(Silicon::Headers ALIAS ${PROJECT_NAME})
 
 get_target_property(SOURCES ${PROJECT_NAME} SOURCES)

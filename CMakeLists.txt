@@ -34,7 +34,7 @@ add_subdirectory(libs/tinygltf)
 set(TF_BUILD_TESTS OFF)
 add_subdirectory(libs/taskflow)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(include/)
@@ -57,7 +57,9 @@ add_library(${PROJECT_NAME}
             src/Node.cpp
             src/Localization.cpp
             src/Renderer.cpp
-            src/Window.cpp src/Async.cpp src/extern/tinygltf.cpp)
+            src/Window.cpp
+            src/Async.cpp src/extern/tinygltf.cpp
+            src/Asset.cpp)
 
 add_library("Silicon::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
