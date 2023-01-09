@@ -44,10 +44,7 @@ Shader::Shader(Device &device, const std::string &string, Type type)
     , m_string(string)
 {
     addDependency(*m_device);
-}
 
-bool Shader::createImpl()
-{
     shaderc::Compiler compiler;
     shaderc::CompilationResult<std::uint32_t> result;
 
@@ -68,22 +65,28 @@ bool Shader::createImpl()
     }
 
     result = compiler.CompileGlslToSpv(m_string, kind, "");
+    BOOST_ASSERT_MSG(result.GetCompilationStatus() == shaderc_compilation_status_success, result.GetErrorMessage().c_str());
 
-    if (result.GetCompilationStatus() == shaderc_compilation_status_success) {
-        Vector<std::uint32_t> spirv {result.begin(), result.end()};
-        vk::ShaderModuleCreateInfo createInfo = {{}, spirv};
-        m_handle = (*m_device)->createShaderModule(createInfo);
-        Si::Engine::Debug("Compiled shader!");
-        return true;
-    }
+    m_spirv.insert(m_spirv.end(), result.cbegin(), result.cend());
+}
 
-    Si::Engine::Error(result.GetErrorMessage());
-    return false;
+bool Shader::createImpl()
+{
+    vk::ShaderModuleCreateInfo createInfo = {{}, m_spirv};
+    m_handle = (*m_device)->createShaderModule(createInfo);
+    return true;
 }
 
 void Shader::destroyImpl()
 {
     (*m_device)->destroyShaderModule(m_handle);
+}
+Shader::Shader(Device &device, const Vector<uint32_t> &spirv, Shader::Type type)
+    : Si::Shader(spirv, type)
+    , m_device(&device)
+{
+    addDependency(device);
+    m_device = &device;
 }
 
 } // Si::Vulkan

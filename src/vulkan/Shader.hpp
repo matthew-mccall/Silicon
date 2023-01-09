@@ -40,7 +40,8 @@ namespace Si::Vulkan {
 class Shader : public Si::Shader, public Handle<vk::ShaderModule>
 {
 public:
-    explicit Shader(Device &device, const std::string &string, Type type);
+    Shader(Device &device, const Vector<std::uint32_t> &spirv, Type type);
+    Shader(Device &device, const std::string &string, Type type);
 
 protected:
     bool createImpl() override;
@@ -48,6 +49,7 @@ protected:
 
 private:
     NotNull<Device *> m_device; // NotNull because we need to be able to move it
+    Vector<std::uint32_t> m_spirv;
     std::string m_string;
 };
 

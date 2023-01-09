@@ -31,7 +31,10 @@
 #ifndef SILICON_SHADER_HPP
 #define SILICON_SHADER_HPP
 
+#include <cstdint>
 #include <string>
+
+#include "Types.hpp"
 
 namespace Si {
 class Shader
@@ -55,7 +58,12 @@ public:
         RTCallable // Future support planned.
     };
 
-    explicit Shader(const std::string &, Type type)
+    Shader(const std::string &, Type type)
+        : m_type(type)
+    {
+    }
+
+    Shader(const Vector<std::uint32_t> &, Type type)
         : m_type(type)
     {
     }
