@@ -31,3 +31,6 @@
 [submodule "libs/tinygltf"]
 	path = libs/tinygltf
 	url = https://github.com/syoyo/tinygltf.git
+[submodule "libs/cmake-modules"]
+	path = libs/cmake-modules
+	url = https://github.com/matthew-mccall/cmake-modules.git
