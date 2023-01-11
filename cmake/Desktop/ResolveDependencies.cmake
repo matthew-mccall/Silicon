@@ -29,10 +29,13 @@ if (SI_PLATFORM STREQUAL "Desktop")
 
     # ================================ Vulkan ================================ #
 
-    find_package(Vulkan REQUIRED COMPONENTS shaderc_combined)
+    find_package(Vulkan REQUIRED COMPONENTS shaderc_combined glslc)
 
     add_subdirectory(src/vulkan)
     add_subdirectory(libs/VulkanMemoryAllocator)
+
+    CompileShader(shaders/simple.vert)
+    CompileShader(shaders/simple.frag)
 
     list(APPEND SI_DEPENDENCIES
          Silicon::Desktop

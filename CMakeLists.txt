@@ -22,6 +22,8 @@ message(STATUS "Building Silicon Engine ${PROJECT_VERSION} for ${SI_PLATFORM}")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+include(CompileShader)
+
 add_subdirectory(libs/glm)
 add_subdirectory(libs/GSL)
 add_subdirectory(libs/spdlog)
